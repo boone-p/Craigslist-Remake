@@ -56,6 +56,16 @@ app.post('/products', (req, res) => {
     res.status(201).send(productToAdd);
 });
 
+app.delete('/products/:id', (req, res) => {
+    const id = req.params['id'];
+    let result = findProductById(id);
+    if (result === undefined || result.length == 0)
+        res.status(404).send('Resource not found.');
+    else {
+        deleteProduct(id);
+        res.status(204).end();
+    }
+});
 
 app.get('/products', (req, res) => {
     res.send(products);
@@ -63,6 +73,17 @@ app.get('/products', (req, res) => {
 
 function addProduct(product){
     products['productsList'].push(product);
+}
+
+function deleteProduct(id) {
+    for (let [i, item] of products['productsList'].entries()) {
+        if (item.id == id)
+            products['productsList'].splice(i, 1);
+    }
+}
+
+function findProductById(id) {
+    return products['productsList'].find((products) => products['id'] === id); 
 }
 
 function generateProductID(){
