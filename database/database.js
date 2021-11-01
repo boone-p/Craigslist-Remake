@@ -37,7 +37,22 @@ async function getProducts(criteria) {
 	return result;
 }
 
+/**
+ * Would like to implement "contains" for criteria
+ * @param {*} products
+ * @param {*} criteria
+ */
 async function filterProducts(products, criteria) {
+	let filtered = [];
+	products.forEach((prod) => {
+		console.log(prod);
+		for (let i = 0; i < criteria.length; i++) {
+			let crit = criteria[i];
+			if(!(crit==="")) {
+				prodValue = prod.find({ prodCriteria[i]: });
+			}
+		}
+	});
 	return products;
 }
 
@@ -47,7 +62,7 @@ async function getUsers() {
 }
 
 /**
- * db.products.insertOne({title: "Trampoline", datePosted: "10/29/2021", productID: "abc123", categories: ["bounce","fun","toy","backyard"], description: "It's a cool trampoline", condition: "worn", seller: "dustinglockman"})
+ * db.products.insertOne({title: "Bench", datePosted: "11/01/2021", productID: "abc124", categories: ["sit","sturdy","furniture","wood"], description: "It's a good bench", condition: "used", seller: "peteroustem"})
  * @param {*} product
  */
 async function addProduct(product) {
