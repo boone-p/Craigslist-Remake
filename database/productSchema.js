@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
-	productID: Schema.Types.ObjectID,
+	productID: mongoose.Schema.Types.ObjectID,
 	categories: [String],
 	description: {
 		type: String,
@@ -32,8 +32,9 @@ const productSchema = new mongoose.Schema({
 	image: {
 		data: Buffer,
 		contentType: String,
-	},
-	//https://stackoverflow.com/questions/29780733/store-an-image-in-mongodb-using-node-js-express-and-mongoose
-});
+	}
+}, {collection: "productList"});
 
-module.exports = Product;
+const product = mongoose.model("product", productSchema);
+
+module.exports = product;
