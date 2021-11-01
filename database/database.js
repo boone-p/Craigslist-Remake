@@ -3,7 +3,7 @@
 
 const mongoose = require("mongoose");
 const productModel = require("./productSchema");
-const userModel = require("./userSchema");
+//const userModel = require("./userSchema");
 
 mongoose
 	.connect("mongodb://localhost:27017/FreeStuffApp", {
@@ -89,3 +89,8 @@ async function deleteUser(id) {
 		return undefined;
 	}
 }
+
+exports.getProducts = getProducts;
+exports.addProduct = addProduct;
+exports.deleteProduct = deleteProduct;
+
