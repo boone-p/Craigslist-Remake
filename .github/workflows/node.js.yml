@@ -3,6 +3,11 @@ name: Node.js CI
 on:
   push:
     branches: main
+    
+defaults:
+  run:
+    working-directory: backend
+
 
 jobs:
   build:
