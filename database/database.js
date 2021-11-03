@@ -1,6 +1,3 @@
-// Database for Free Stuff App
-// This file will do database operations
-
 const mongoose = require("mongoose");
 const productModel = require("./productSchema");
 //const userModel = require("./userSchema");
@@ -108,4 +105,3 @@ async function deleteUser(id) {
 exports.getProducts = getProducts;
 exports.addProduct = addProduct;
 exports.deleteProduct = deleteProduct;
-
