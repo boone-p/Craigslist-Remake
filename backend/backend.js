@@ -1,36 +1,6 @@
 // backend for Free Stuff App
 
-const products = {
-  productsList: [
-    {
-      id: "xyz789",
-      title: "Skateboard",
-      description: "cool skateboard",
-      location: "San Luis Obispo, CA",
-      category: "fun",
-      contactInfo: "boone@mail.com",
-    },
-    {
-      id: "abc123",
-      title: "BBgun",
-      description: "shoots bbs",
-      location: "Los Angeles, CA",
-      category: "fun",
-      contactInfo: "ryan@mail.com",
-    },
-    {
-      id: "ppp222",
-      title: "Fork",
-      description: "a metal fork",
-      location: "San Luis Obispo, CA",
-      category: "cooking",
-      contactInfo: "bruno@mail.com",
-    },
-  ],
-};
-
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const dbServices = require("../database/database");
 
@@ -46,7 +16,6 @@ app.get("/", async (req, res) => {
 
 app.post("/products", async (req, res) => {
   const productToAdd = req.body;
-  productToAdd.id = mongoose.Types.ObjectId();
   const savedProduct = await dbServices.addProduct(productToAdd);
   if (savedProduct)
     res.status(201).send(savedProduct);
@@ -55,7 +24,7 @@ app.post("/products", async (req, res) => {
 });
 
 app.delete("/products/:id", (req, res) => {
-  const id = req.params["id"];
+  const id = req.params["_id"];
   let result = findProductById(id);
   if (result === undefined)
     res.status(404).send("Resource not found.");

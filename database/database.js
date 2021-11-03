@@ -37,24 +37,24 @@ async function getProducts(criteria) {
 	return result;
 }
 
-/**
- * Would like to implement "contains" for criteria
- * @param {*} products
- * @param {*} criteria
- */
-async function filterProducts(products, criteria) {
-	let filtered = [];
-	products.forEach((prod) => {
-		console.log(prod);
-		for (let i = 0; i < criteria.length; i++) {
-			let crit = criteria[i];
-			if(!(crit==="")) {
-				prodValue = prod.find({ prodCriteria[i]: });
-			}
-		}
-	});
-	return products;
-}
+// /**
+//  * Would like to implement "contains" for criteria
+//  * @param {*} products
+//  * @param {*} criteria
+//  */
+// async function filterProducts(products, criteria) {
+// 	let filtered = [];
+// 	products.forEach((prod) => {
+// 		console.log(prod);
+// 		for (let i = 0; i < criteria.length; i++) {
+// 			let crit = criteria[i];
+// 			if(!(crit==="")) {
+// 				prodValue = prod.find({ prodCriteria[i]: });
+// 			}
+// 		}
+// 	});
+// 	return products;
+// }
 
 async function getUsers() {
 	let users = await userModel.find();

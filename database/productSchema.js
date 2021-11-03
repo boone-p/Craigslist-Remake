@@ -13,7 +13,6 @@ const productSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
-	productID: mongoose.Schema.Types.ObjectID,
 	categories: [String],
 	description: {
 		type: String,
