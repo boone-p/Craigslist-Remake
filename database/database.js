@@ -1,26 +1,37 @@
 const mongoose = require("mongoose");
-const productModel = require("./productSchema");
+const productSchema = require("./productSchema");
 //const userModel = require("./userSchema");
 const dotenv = require("dotenv");
 dotenv.config();
 
-mongoose
-	.connect(
-		//"mongodb+srv://"+"rdmaier"+":"+"<password>"+"@freestuffapp.dycx2.mongodb.net/"+"myFirstDatabase"+"?retryWrites=true&w=majority"
-		"mongodb+srv://" +
-			process.env.MONGO_USER +
-			":" +
-			process.env.MONGO_PWD +
-			"@freestuffapp.dycx2.mongodb.net/" +
-			process.env.MONGO_DB +
-			"?retryWrites=true&w=majority",
-		//'mongodb://localhost:27017/users',
-		{
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
+let conn;
+
+function getConnection() {
+	if (!conn) {
+		if (process.argv.includes("--prod")) {
+			conn = mongoose.createConnection(
+				"mongodb+srv://" +
+					process.env.MONGO_USER +
+					":" +
+					process.env.MONGO_PWD +
+					"@freestuffapp.dycx2.mongodb.net/" +
+					process.env.MONGO_DB +
+					"?retryWrites=true&w=majority",
+				{
+					useNewUrlParser: true,
+					useUnifiedTopology: true,
+				});
 		}
-	)
-	.catch((error) => console.log(error));
+		else {
+			conn = mongoose.createConnection("mongodb://localhost:27017/products",
+			{
+				useNewUrlParser: true,
+				useUnifiedTopology: true,
+			});
+		}
+	}
+	return conn;
+}
 
 let prodCriteria = [
 	"title",
@@ -41,9 +52,14 @@ let prodCriteria = [
  * ["", "", "", "new", ""] // returns all condition = "new" products
  * ["Toy", "", "", "", "Dave"] // returns all title = "Toy" products posted by Dave
  */
-async function getProducts(criteria) {
-	let products = await productModel.find();
-	let result = filterProducts(products, criteria);
+async function getProducts(title) {
+	const productModel = getConnection().model("Product", productSchema);
+	let result;
+	if (title === undefined)
+		result = await productModel.find();
+	else {
+		//result = await findTitle(title); return all products that have the search criteria in them
+	}
 	return result;
 }
 
@@ -66,16 +82,17 @@ async function getProducts(criteria) {
 // 	return products;
 // }
 
-async function getUsers() {
-	let users = await userModel.find();
-	return users;
-}
+// async function getUsers() {
+// 	let users = await userModel.find();
+// 	return users;
+// }
 
 /**
  * db.products.insertOne({title: "Bench", datePosted: "11/01/2021", productID: "abc124", categories: ["sit","sturdy","furniture","wood"], description: "It's a good bench", condition: "used", seller: "peteroustem"})
  * @param {*} product
  */
 async function addProduct(product) {
+	const productModel = getConnection().model("Product", productSchema);
 	try {
 		const prodToAdd = new productModel(product);
 		const savedProd = await prodToAdd.save();
@@ -86,39 +103,40 @@ async function addProduct(product) {
 	}
 }
 
-async function addUser(user) {
+// async function addUser(user) {
+// 	try {
+// 		const userToAdd = new userModel(user);
+// 		const savedUser = await userToAdd.save();
+// 		return savedUser;
+// 	} catch (error) {
+// 		console.log(error);
+// 		return false;
+// 	}
+// }
+
+async function deleteProduct(id) {
+	const productModel = getConnection().model("Product", productSchema);
 	try {
-		const userToAdd = new userModel(user);
-		const savedUser = await userToAdd.save();
-		return savedUser;
+		return await findByIdAndDelete(id);
 	} catch (error) {
 		console.log(error);
 		return false;
 	}
 }
 
-async function deleteProduct(id) {
-	try {
-		return await productModel.findByIdAndDelete(id);
-	} catch (error) {
-		console.log(error);
-		return undefined;
-	}
-}
-
-async function deleteUser(id) {
-	try {
-		return await userModel.findByIdAndDelete(id);
-	} catch (error) {
-		console.log(error);
-		return undefined;
-	}
-}
+// async function deleteUser(id) {
+// 	try {
+// 		return await userModel.findByIdAndDelete(id);
+// 	} catch (error) {
+// 		console.log(error);
+// 		return undefined;
+// 	}
+// }
 
 exports.getProducts = getProducts;
 exports.addProduct = addProduct;
 exports.deleteProduct = deleteProduct;
-exports.getUser = getUser;
-exports.addUser = addUser;
-exports.deleteUser = deleteUser;
+// exports.getUser = getUser;
+// exports.addUser = addUser;
+// exports.deleteUser = deleteUser;
 
