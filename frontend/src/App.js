@@ -16,18 +16,25 @@ function App() {
 
     useEffect(() => {
         fetchAll().then( result => {
-          if (result)
-              setProducts(result);
+          if (result) {
+            console.log("result in useEffect")
+            console.log(result)
+            setProducts(result.data.productList);
+          }
+
         });
        }, [] );
 
+    console.log("trying to print products")
+    console.log(products)
     async function fetchAll(){
         try {
-           const response = await axios.get('http://localhost:5000/products');
-           return response.data.productsList;     
+           const response = await axios.get('http://localhost:5000/');
+           console.log("response from frontend")
+           console.log(response)
+           return response 
         }
         catch (error){
-           //We're not handling errors. Just logging into the console.
            console.log(error); 
            return false;         
         }
@@ -37,7 +44,7 @@ function App() {
     function addProduct(product) { 
         makePostCall(product).then( result => {
         if (result && result.status === 201)
-          setProducts([...products, result.data] );
+          setProducts([...products, result.data]);
         });
     }
     
@@ -64,7 +71,7 @@ function App() {
     //       }
     //     });
     // }
-
+    
     return (
         <Router>
             <div>
@@ -88,7 +95,6 @@ function App() {
 
                     <Route path="/">
                         <Cards productData={products}/>
-
                     </Route>
 
                 </Switch>

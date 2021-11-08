@@ -33,41 +33,37 @@ function getConnection() {
 	return conn;
 }
 
-let prodCriteria = [
-	"title",
-	"datePosted",
-	"productID",
-	"categories",
-	"description",
-	"condition",
-	"seller",
-];
-
-/**
- * @param {*} criteria should be a list of 5 strings, where each element
- *     corresponds to the search criteria in the order above. Criteria
- *     which are not being filtered should be represented by empty strings.
- * Examples:
- * ["", "", "", "", ""] // returns all products
- * ["", "", "", "new", ""] // returns all condition = "new" products
- * ["Toy", "", "", "", "Dave"] // returns all title = "Toy" products posted by Dave
- */
-async function getProducts(title) {
+async function getProducts() {
 	const productModel = getConnection().model("Product", productSchema);
 	let result;
-	if (title === undefined)
-		result = await productModel.find();
-	else {
-		//result = await findTitle(title); return all products that have the search criteria in them
-	}
+
+	result = await productModel.find();
+
 	return result;
 }
 
-// /**
-//  * Would like to implement "contains" for criteria
-//  * @param {*} products
-//  * @param {*} criteria
-//  */
+async function addProduct(product) {
+	const productModel = getConnection().model("Product", productSchema);
+	try {
+		const prodToAdd = new productModel(product);
+		const savedProd = await prodToAdd.save();
+		return savedProd;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+
+async function deleteProduct(id) {
+	const productModel = getConnection().model("Product", productSchema);
+	try {
+		return await findByIdAndDelete(id);
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+
 // async function filterProducts(products, criteria) {
 // 	let filtered = [];
 // 	products.forEach((prod) => {
@@ -87,22 +83,6 @@ async function getProducts(title) {
 // 	return users;
 // }
 
-/**
- * db.products.insertOne({title: "Bench", datePosted: "11/01/2021", productID: "abc124", categories: ["sit","sturdy","furniture","wood"], description: "It's a good bench", condition: "used", seller: "peteroustem"})
- * @param {*} product
- */
-async function addProduct(product) {
-	const productModel = getConnection().model("Product", productSchema);
-	try {
-		const prodToAdd = new productModel(product);
-		const savedProd = await prodToAdd.save();
-		return savedProd;
-	} catch (error) {
-		console.log(error);
-		return false;
-	}
-}
-
 // async function addUser(user) {
 // 	try {
 // 		const userToAdd = new userModel(user);
@@ -113,16 +93,6 @@ async function addProduct(product) {
 // 		return false;
 // 	}
 // }
-
-async function deleteProduct(id) {
-	const productModel = getConnection().model("Product", productSchema);
-	try {
-		return await findByIdAndDelete(id);
-	} catch (error) {
-		console.log(error);
-		return false;
-	}
-}
 
 // async function deleteUser(id) {
 // 	try {
@@ -139,4 +109,3 @@ exports.deleteProduct = deleteProduct;
 // exports.getUser = getUser;
 // exports.addUser = addUser;
 // exports.deleteUser = deleteUser;
-

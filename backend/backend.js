@@ -7,18 +7,21 @@ const port = 5000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/", async (req, res) => {
-	res.send(dbServices.getProducts());
+app.get('/', async (req, res) => {
+	const result = await dbServices.getProducts()
+	console.log("result from backend")
+	console.log(result)
+	res.send({productList : result});
 });
 
-app.post("/products", async (req, res) => {
+app.post('/products', async (req, res) => {
 	const productToAdd = req.body;
 	const savedProduct = await dbServices.addProduct(productToAdd);
 	if (savedProduct) res.status(201).send(savedProduct);
 	else res.status(500).end();
 });
 
-app.delete("/products/:id", (req, res) => {
+app.delete('/products/:id', (req, res) => {
 	const id = req.params["_id"];
 	let result = findProductById(id);
 	if (result === undefined) res.status(404).send("Resource not found.");
