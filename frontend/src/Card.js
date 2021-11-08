@@ -7,6 +7,7 @@ const grid = {
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
+    paddingLeft: '145px'
 }
 
 const box = {
