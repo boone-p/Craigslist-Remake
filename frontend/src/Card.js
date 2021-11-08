@@ -13,6 +13,7 @@ const box = {
     width: '15rem',
     margin: '80px',
     maxHeight: '55vh',
+    boxShadow: '2px 2px 2px 2px #cccccc',
 }
 
 function RenderCards(props) {

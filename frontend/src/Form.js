@@ -1,6 +1,14 @@
 
 import React, {useState} from 'react';
 
+const myForm = {
+    padding: '80px',
+}
+
+const button = {
+    backgroundColor: 'lightgray',
+    borderColor: 'white',
+}
 
 function Form(props) { 
 
@@ -32,57 +40,50 @@ function Form(props) {
     }
       
     return (
-        <form>
+        <form style = {myForm}>
 
-        <label htmlFor="name">title</label>
-        <input
-            type="text"
-            name="title"
-            id="title"
-            value={productData.title}
-            onChange={handleChange} />
-            
-        <label htmlFor="description">description</label>
-        <input
-            type="text"
-            name="description"
-            id="description"
-            value={productData.description}
-            onChange={handleChange} />
+            <label htmlFor="name">title</label>
+            <input
+                type="text"
+                name="title"
+                id="title"
+                value={productData.title}
+                onChange={handleChange} />
+                
+            <label htmlFor="description">description</label>
+            <input
+                type="text"
+                name="description"
+                id="description"
+                value={productData.description}
+                onChange={handleChange} />
 
-        <label htmlFor="location">location</label>
-        <input
-            type="text"
-            name="location"
-            id="location"
-            value={productData.location}
-            onChange={handleChange} />
-            
-        <label htmlFor="category">category</label>
-        <input
-            type="text"
-            name="category"
-            id="category"
-            value={productData.category}
-            onChange={handleChange} />
+            <label htmlFor="location">location</label>
+            <input
+                type="text"
+                name="location"
+                id="location"
+                value={productData.location}
+                onChange={handleChange} />
+                
+            <label htmlFor="category">category</label>
+            <input
+                type="text"
+                name="category"
+                id="category"
+                value={productData.category}
+                onChange={handleChange} />
 
-        <label htmlFor="contactInfo">contact info</label>
-        <input
-            type="text"
-            name="contactInfo"
-            id="contactInfo"
-            value={productData.contactInfo}
-            onChange={handleChange} />
+            <label htmlFor="contactInfo">contact info</label>
+            <input
+                type="text"
+                name="contactInfo"
+                id="contactInfo"
+                value={productData.contactInfo}
+                onChange={handleChange} />
 
-        <input type="button" value="Submit" onClick={submitForm} />
+            <input type="button" value="Submit" style ={button} onClick={submitForm} />
 
-        {/* <h1>testing if handle change goes through:
-            <span style={{ color: 'red' }}>{productData.title}</span>
-            <span style={{ color: 'green' }}>{productData.description}</span>
-            <span style={{ color: 'blue' }}>{productData.location}</span>
-            <span style={{ color: 'pink' }}>{productData.category}</span>
-            <span style={{ color: 'purple' }}>{productData.contactInfo}</span>
-        </h1> */}
         
         </form>
     ); 
