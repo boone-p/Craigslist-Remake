@@ -12,7 +12,7 @@ const grid = {
 
 const box = {
     width: '19rem',
-    height: '18rem',
+    maxHeight: '25rem',
     margin: '80px',
     maxHeight: '55vh',
     boxShadow: '2px 2px 2px 2px #cccccc',
