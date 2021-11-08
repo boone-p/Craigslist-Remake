@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Form from './Form';
 import Cards from './Card';
+import Navbar from './Navbar'
 import axios from 'axios';
 import {
     BrowserRouter as Router,
@@ -75,17 +76,7 @@ function App() {
     return (
         <Router>
             <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/submit">Submit a product</Link>
-                        </li>
-        
-                    </ul>
-                </nav>
+                <Navbar />
 
                 <Switch>
 
