@@ -9,9 +9,7 @@ app.use(express.json());
 
 app.get('/', async (req, res) => {
 	const result = await dbServices.getProducts()
-	console.log("result from backend")
-	console.log(result)
-	res.send({productList : result});
+	res.send({ productList: result });
 });
 
 app.post('/products', async (req, res) => {
@@ -31,6 +29,6 @@ app.delete('/products/:id', (req, res) => {
 	}
 });
 
-app.listen(port, () => {
-	console.log(`Example app listening at http://localhost:${port}`);
+app.listen(process.env.PORT || port, () => {
+	console.log("REST API is listening.");
 });

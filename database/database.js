@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const productSchema = require("./productSchema");
-//const userModel = require("./userSchema");
+const userSchema = require("./userSchema");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -33,12 +33,14 @@ function getConnection() {
 	return conn;
 }
 
-async function getProducts() {
+async function getProducts(criteria) {
 	const productModel = getConnection().model("Product", productSchema);
 	let result;
-
-	result = await productModel.find();
-
+	if (criteria === undefined)
+		result = await productModel.find();
+	else {
+		// return all products that contain search criteria in the title or description
+	}
 	return result;
 }
 
@@ -57,7 +59,7 @@ async function addProduct(product) {
 async function deleteProduct(id) {
 	const productModel = getConnection().model("Product", productSchema);
 	try {
-		return await findByIdAndDelete(id);
+		return await findByIdAndDelete(id); //write search algorithm
 	} catch (error) {
 		console.log(error);
 		return false;
@@ -78,34 +80,42 @@ async function deleteProduct(id) {
 // 	return products;
 // }
 
-// async function getUsers() {
-// 	let users = await userModel.find();
-// 	return users;
-// }
+async function getUsers(name) {
+	const userModel = getConnection().model("User", userSchema);
+	let result;
+	if (name === undefined)
+		result = await userModel.find();
+	else {
+		//return all users that have the same name as the search criteria
+	}
+	return result;
+}
 
-// async function addUser(user) {
-// 	try {
-// 		const userToAdd = new userModel(user);
-// 		const savedUser = await userToAdd.save();
-// 		return savedUser;
-// 	} catch (error) {
-// 		console.log(error);
-// 		return false;
-// 	}
-// }
+async function addUser(user) {
+	const userModel = getConnection().model("User", userSchema);
+	try {
+		const userToAdd = new userModel(user);
+		const savedUser = await userToAdd.save();
+		return savedUser;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
 
-// async function deleteUser(id) {
-// 	try {
-// 		return await userModel.findByIdAndDelete(id);
-// 	} catch (error) {
-// 		console.log(error);
-// 		return undefined;
-// 	}
-// }
+async function deleteUser(id) {
+	const userModel = getConnection().model("User", userSchema);
+	try {
+		return await findByNameAndIdAndDelete(id); //write search algorithm
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
 
 exports.getProducts = getProducts;
 exports.addProduct = addProduct;
 exports.deleteProduct = deleteProduct;
-// exports.getUser = getUser;
-// exports.addUser = addUser;
-// exports.deleteUser = deleteUser;
+exports.getUser = getUsers;
+exports.addUser = addUser;
+exports.deleteUser = deleteUser;
