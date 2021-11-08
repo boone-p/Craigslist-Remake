@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import Form from './Form';
 import Cards from './Card';
 import Navbar from './Navbar'
+import About from './About'
+import Register from './Register'
 import axios from 'axios';
 import {
     BrowserRouter as Router,
@@ -80,14 +82,22 @@ function App() {
 
                 <Switch>
 
+                    <Route path="/register">
+                        <Register/>
+                    </Route>
+
                     <Route path="/submit">
                         <Form handleSubmit={addProduct} />
+                    </Route>
+
+                    <Route path="/about">
+                        <About/>
                     </Route>
 
                     <Route path="/">
                         <Cards productData={products}/>
                     </Route>
-
+                    
                 </Switch>
             </div>
         </Router>
