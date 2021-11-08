@@ -9,7 +9,6 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
   } from "react-router-dom";
 
 
@@ -97,7 +96,7 @@ function App() {
                     <Route path="/">
                         <Cards productData={products}/>
                     </Route>
-                    
+
                 </Switch>
             </div>
         </Router>
