@@ -19,6 +19,11 @@ function MyNavbar() {
                     <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
+                <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                </input>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
             </Navbar.Collapse>
         </Container>
         </Navbar>
