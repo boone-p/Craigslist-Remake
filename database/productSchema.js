@@ -30,7 +30,7 @@ const productSchema = new mongoose.Schema(
 			contentType: String,
 		},
 		seller: {
-			type: String, //_id of user selling product
+			type: String, //_id of user
 			required: true,
 		},
 		location: {
