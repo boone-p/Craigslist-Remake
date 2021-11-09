@@ -19,6 +19,13 @@ app.post('/products', async (req, res) => {
 	else res.status(500).end();
 });
 
+app.post('/register', async (req, res) => {
+	const userToAdd = req.body;
+	const savedUser = await dbServices.addUser(userToAdd);
+	if (savedUser) res.status(201).send(savedUser);
+	else res.status(500).end();
+});
+
 app.delete('/products/:id', (req, res) => {
 	const id = req.params["_id"];
 	let result = findProductById(id);
