@@ -7,32 +7,41 @@ const productSchema = new mongoose.Schema(
 			required: true,
 			trim: true,
 			validate(value) {
-				if (value.length < 1) throw new Error("Invalid title.");
+				if ((value.length < 1) || (value.length > 255)) throw new Error("Invalid title.");
 			},
 		},
-		datePosted: {
-			type: Date,
-			default: Date.now,
-		},
-		categories: [String],
 		description: {
 			type: String,
 			required: true,
 			trim: true,
 			validate(value) {
-				if (value.length < 1) throw new Error("Invalid description.");
+				if ((value.length < 1) || (value.length > 1024)) throw new Error("Invalid description.");
 			},
 		},
-		condition: String,
-		location: {
-			type: String,
-			required: true,
+		categories: {
+			type: [String]
 		},
-		seller: String, //userID
+		condition: {
+			type: String,
+			required: true
+		},
 		image: {
 			data: Buffer,
 			contentType: String,
 		},
+		seller: {
+			type: String, //_id of user selling product
+			required: true,
+		},
+		location: {
+			type: String,
+			required: true,
+		},
+		datePosted: {
+			type: Date,
+			required: true,
+			default: Date.now
+		}
 	},
 	{ collection: "productList" }
 );
