@@ -66,21 +66,7 @@ async function deleteProduct(id) {
 	}
 }
 
-// async function filterProducts(products, criteria) {
-// 	let filtered = [];
-// 	products.forEach((prod) => {
-// 		console.log(prod);
-// 		for (let i = 0; i < criteria.length; i++) {
-// 			let crit = criteria[i];
-// 			if(!(crit==="")) {
-// 				prodValue = prod.find({ prodCriteria[i]: });
-// 			}
-// 		}
-// 	});
-// 	return products;
-// }
-
-async function getUsers(name) {
+async function getUser(name) {
 	const userModel = getConnection().model("User", userSchema);
 	let result;
 	if (name === undefined)
@@ -116,6 +102,6 @@ async function deleteUser(id) {
 exports.getProducts = getProducts;
 exports.addProduct = addProduct;
 exports.deleteProduct = deleteProduct;
-exports.getUser = getUsers;
+exports.getUser = getUser;
 exports.addUser = addUser;
 exports.deleteUser = deleteUser;

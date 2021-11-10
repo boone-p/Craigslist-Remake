@@ -12,6 +12,11 @@ app.get('/', async (req, res) => {
 	res.send({ productList: result });
 });
 
+app.get('/login', async (req, res) => {
+	const result = await dbServices.getProducts()
+	res.send({ productList: result });
+});
+
 app.post('/products', async (req, res) => {
 	const productToAdd = req.body;
 	const savedProduct = await dbServices.addProduct(productToAdd);
@@ -21,9 +26,10 @@ app.post('/products', async (req, res) => {
 
 app.post('/register', async (req, res) => {
 	const userToAdd = req.body;
-	const savedUser = await dbServices.addUser(userToAdd);
-	if (savedUser) res.status(201).send(savedUser);
-	else res.status(500).end();
+	// const savedUser = await dbServices.addUser(userToAdd);
+	// if (savedUser) res.status(201).send(savedUser);
+	// else res.status(500).end();
+	console.log(userToAdd)
 });
 
 app.delete('/products/:id', (req, res) => {

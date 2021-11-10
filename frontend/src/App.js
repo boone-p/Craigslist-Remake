@@ -15,20 +15,18 @@ import {
 function App() {
 
     const[products, setProducts] = useState([])
+    const[user, setUser] = useState([])
 
     useEffect(() => {
         fetchAll().then( result => {
           if (result) {
-            console.log("result in useEffect")
-            console.log(result)
             setProducts(result.data.productList);
           }
 
         });
        }, [] );
 
-    console.log("trying to print products")
-    console.log(products)
+
     async function fetchAll(){
         try {
            const response = await axios.get('http://localhost:5000/');
@@ -49,6 +47,13 @@ function App() {
           setProducts([...products, result.data]);
         });
     }
+
+    function addUser(user) { 
+        makeUserPostCall(user).then( result => {
+        if (result && result.status === 201)
+          setUser([...user, result.data]);
+        });
+    }
     
     async function makePostCall(product) {
         try {
@@ -62,27 +67,26 @@ function App() {
         }
     }
 
-    // function removeOneCharacter(index) {
+    async function makeUserPostCall(user) {
+        try {
+           const response = await axios.post('http://localhost:5000/register', user);
+           console.log(response)
+           return response;
+        }
+        catch (error) { 
+           console.log(error);
+           return false;
+        }
+    }
 
-    //     makeDeleteCall(characters[index].id).then( result => {
-    //       if (result && result.status === 204) {
-    //         const updated = characters.filter((characters, i) => {
-    //           return i !== index
-    //         });
-    //         setCharacters(updated);
-    //       }
-    //     });
-    // }
-    
     return (
         <Router>
             <div>
+
                 <Navbar />
-
                 <Switch>
-
                     <Route path="/register">
-                        <Register/>
+                        <Register handleSubmit={addUser}/>
                     </Route>
 
                     <Route path="/submit">
@@ -96,8 +100,8 @@ function App() {
                     <Route path="/">
                         <Cards productData={products}/>
                     </Route>
-
                 </Switch>
+
             </div>
         </Router>
     );
