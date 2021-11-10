@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+// use these to install bycrpt in database folder
+// npm install node-gyp -g
+// npm install bcrypt -g
+
+// npm install bcrypt --save
 
 const userSchema = new mongoose.Schema(
     {
