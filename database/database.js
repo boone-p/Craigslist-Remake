@@ -89,7 +89,7 @@ async function addUser(user) {
 	}
 }
 
-async function findUser({username}) {
+async function findUserByUsername({username}) {
 	const userModel = getConnection().model("User", userSchema);
 	try {
 		return await userModel.findOne({username}).lean();
