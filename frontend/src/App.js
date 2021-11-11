@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import Form from './Form';
 import Cards from './Card';
-import Navbar from './Navbar'
-import About from './About'
-import Register from './Register'
+import Navbar from './Navbar';
+import About from './About';
+import Register from './Register';
+import Login from './Login';
 import axios from 'axios';
 import {
     BrowserRouter as Router,
@@ -51,7 +52,8 @@ function App() {
     function addUser(user) { 
         makeUserPostCall(user).then( result => {
         if (result && result.status === 201)
-          setUser([...user, result.data]);
+          console.log(result.data)
+          setUser(user, result.data);
         });
     }
     
@@ -70,6 +72,7 @@ function App() {
     async function makeUserPostCall(user) {
         try {
            const response = await axios.post('http://localhost:5000/register', user);
+           console.log("hey heres the response from makeUserPostCall")
            console.log(response)
            return response;
         }
@@ -87,6 +90,10 @@ function App() {
                 <Switch>
                     <Route path="/register">
                         <Register handleSubmit={addUser}/>
+                    </Route>
+
+                    <Route path="/login">
+                        <Login/>
                     </Route>
 
                     <Route path="/submit">
