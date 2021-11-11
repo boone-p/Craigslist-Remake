@@ -1,5 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 const dbServices = require("../database/database");
 
 const app = express();
@@ -17,6 +20,19 @@ app.get('/login', async (req, res) => {
 	res.send({ productList: result });
 });
 
+app.post('/login', async (req, res) => {
+	const {username, password} = req.body;
+	const user = await dbServices.findUser({username});
+	if (await bcrypt.compare(password, user.password)) {
+		const token = jwt.sign({
+			id: user._id,
+			username: user.username
+		}, process.env.JWT_SECRET);
+		res.status(201).send(token);
+	}
+	else res.status(401).end();
+});
+
 app.post('/products', async (req, res) => {
 	const productToAdd = req.body;
 	const savedProduct = await dbServices.addProduct(productToAdd);
@@ -26,10 +42,10 @@ app.post('/products', async (req, res) => {
 
 app.post('/register', async (req, res) => {
 	const userToAdd = req.body;
-	// const savedUser = await dbServices.addUser(userToAdd);
-	// if (savedUser) res.status(201).send(savedUser);
-	// else res.status(500).end();
-	console.log(userToAdd)
+	const savedUser = await dbServices.addUser(userToAdd);
+	if (savedUser) res.status(201).send(savedUser);
+	else res.status(500).end();
+	console.log(userToAdd);
 });
 
 app.delete('/products/:id', (req, res) => {

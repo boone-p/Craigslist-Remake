@@ -89,6 +89,16 @@ async function addUser(user) {
 	}
 }
 
+async function findUser({username}) {
+	const userModel = getConnection().model("User", userSchema);
+	try {
+		return await userModel.findOne({username}).lean();
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+
 async function deleteUser(id) {
 	const userModel = getConnection().model("User", userSchema);
 	try {
@@ -105,3 +115,4 @@ exports.deleteProduct = deleteProduct;
 exports.getUser = getUser;
 exports.addUser = addUser;
 exports.deleteUser = deleteUser;
+exports.findUser = findUser;
