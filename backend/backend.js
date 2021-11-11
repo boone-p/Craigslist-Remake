@@ -58,6 +58,20 @@ app.delete('/products/:id', (req, res) => {
 	}
 });
 
+app.get('/login', async (req, res) => {
+	const result = await dbServices.getUser(blah)
+	res.send({ productList: result });
+});
+
+app.post('/register', async (req, res) => {
+	const userToAdd = req.body;
+	const savedUser = await dbServices.addUser(userToAdd);
+	if (savedUser) res.status(201).send(savedUser);
+	else res.status(500).end();
+	// console.log(userToAdd)
+});
+
+
 app.listen(process.env.PORT || port, () => {
 	console.log("REST API is listening.");
 });
