@@ -52,15 +52,4 @@ userSchema.pre('save', function(next) {
     }
 })
 
-userSchema.methods.validateLogin = async function(password) {
-    if(!password) throw new Error("password is missing")
-
-    try{
-        const result = await bcrypt.compare(password, this.password)
-        return result;
-    } catch (error) {
-        console.log('passsword is invalid', error.message)
-    }
-}
-
 module.exports = userSchema;
