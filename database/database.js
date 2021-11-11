@@ -115,4 +115,4 @@ exports.deleteProduct = deleteProduct;
 exports.getUser = getUser;
 exports.addUser = addUser;
 exports.deleteUser = deleteUser;
-exports.findUser = findUser;
+exports.findUserByUsername = findUserByUsername;
