@@ -22,7 +22,7 @@ app.get('/login', async (req, res) => {
 
 app.post('/login', async (req, res) => {
 	const {username, password} = req.body;
-	const user = await dbServices.findUser({username});
+	const user = await dbServices.findUserByUsername({username});
 	if (await bcrypt.compare(password, user.password)) {
 		const token = jwt.sign({
 			id: user._id,
