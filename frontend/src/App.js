@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import Form from './Form';
 import Cards from './Card';
-import Navbar from './Navbar'
-import About from './About'
-import Register from './Register'
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
+import About from './About';
+import Register from './Register';
 import axios from 'axios';
 import {
     BrowserRouter as Router,
@@ -99,6 +100,7 @@ function App() {
 
                     <Route path="/">
                         <Cards productData={products}/>
+                        <Sidebar />
                     </Route>
                 </Switch>
 
