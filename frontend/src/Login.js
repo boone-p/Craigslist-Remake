@@ -11,10 +11,11 @@ const button = {
 
 function Login(props) { 
 
-    const [loginData, setLogin] = useState(
+    const [loginData, setToken] = useState(
         {  
-            name: '',
+            email: '',
             password: '',
+            token: ''
         }
     );
 
@@ -22,7 +23,7 @@ function Login(props) {
         let value = event.target.value;
         let name = event.target.name
 
-        setLogin((prevalue) => {
+        setToken((prevalue) => {
             return {
               ...prevalue,             
               [name]: value
@@ -32,18 +33,18 @@ function Login(props) {
 
     function submitForm() {
         props.handleSubmit(loginData);
-        setLogin({name: '', password: ''});
+        setToken({email: '', password: ''});
     }
       
     return (
         <form style = {myForm}>
 
-            <label htmlFor="name">name</label>
+            <label htmlFor="email">email</label>
             <input
                 type="text"
-                name="name"
-                id="name"
-                value={loginData.name}
+                name="email"
+                id="email"
+                value={loginData.email}
                 onChange={handleChange} 
             />
 
