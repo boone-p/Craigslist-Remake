@@ -15,7 +15,6 @@ import {
 
 
 function App() {
-
 	const[products, setProducts] = useState([])
 
 	useEffect(() => {
@@ -113,7 +112,6 @@ function App() {
 		   return false;
 		}
 	}
-
 
 	return (
 		<Router>
