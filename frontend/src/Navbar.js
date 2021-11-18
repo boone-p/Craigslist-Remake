@@ -13,16 +13,15 @@ function MyNavbar() {
                     <Nav.Link href="/about">About</Nav.Link>
                     <Nav.Link href="/submit">Submit a product</Nav.Link>
                     <Nav.Link href="/register">Register </Nav.Link>
-                    <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                    <Nav.Link href="/login">Login </Nav.Link>
+                    <NavDropdown title="User" id="basic-nav-dropdown">
+                        <NavDropdown.Item onClick = {() => localStorage.removeItem("token")}> Logout </NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
-                <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form className="d-flex">
+                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 </input>
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button className="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </Navbar.Collapse>
         </Container>

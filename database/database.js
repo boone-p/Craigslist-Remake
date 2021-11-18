@@ -6,7 +6,7 @@ dotenv.config();
 
 let conn;
 
-function getConnection() {
+function getConnection(type) {
 	if (!conn) {
 		if (process.argv.includes("--prod")) {
 			conn = mongoose.createConnection(
@@ -23,29 +23,35 @@ function getConnection() {
 				});
 		}
 		else {
-			conn = mongoose.createConnection("mongodb://localhost:27017/products",
-			{
-				useNewUrlParser: true,
-				useUnifiedTopology: true,
-			});
+			if (type === "Product") {
+				conn = mongoose.createConnection("mongodb://127.0.0.1:27017/products",
+				{
+					useNewUrlParser: true,
+					useUnifiedTopology: true,
+				});
+			}
+			else {
+				conn = mongoose.createConnection("mongodb://127.0.0.1:27017/users",
+				{
+					useNewUrlParser: true,
+					useUnifiedTopology: true,
+				});
+			}
 		}
 	}
 	return conn;
 }
 
 async function getProducts(criteria) {
-	const productModel = getConnection().model("Product", productSchema);
+	const productModel = getConnection("Product").model("Product", productSchema);
 	let result;
-	if (criteria === undefined)
-		result = await productModel.find();
-	else {
-		// return all products that contain search criteria in the title or description
-	}
+	if (criteria === undefined) result = await productModel.find();
+	else {}
 	return result;
 }
 
 async function addProduct(product) {
-	const productModel = getConnection().model("Product", productSchema);
+	const productModel = getConnection("Product").model("Product", productSchema);
 	try {
 		const prodToAdd = new productModel(product);
 		const savedProd = await prodToAdd.save();
@@ -57,7 +63,7 @@ async function addProduct(product) {
 }
 
 async function deleteProduct(id) {
-	const productModel = getConnection().model("Product", productSchema);
+	const productModel = getConnection("Product").model("Product", productSchema);
 	try {
 		return await findByIdAndDelete(id); //write search algorithm
 	} catch (error) {
@@ -67,18 +73,15 @@ async function deleteProduct(id) {
 }
 
 async function getUser(name) {
-	const userModel = getConnection().model("User", userSchema);
+	const userModel = getConnection("User").model("User", userSchema);
 	let result;
-	if (name === undefined)
-		result = await userModel.find();
-	else {
-		//return all users that have the same name as the search criteria
-	}
+	if (name === undefined) result = await userModel.find();
+	else {}
 	return result;
 }
 
 async function addUser(user) {
-	const userModel = getConnection().model("User", userSchema);
+	const userModel = getConnection("User").model("User", userSchema);
 	try {
 		const userToAdd = new userModel(user);
 		const savedUser = await userToAdd.save();
@@ -89,10 +92,21 @@ async function addUser(user) {
 	}
 }
 
-async function deleteUser(id) {
-	const userModel = getConnection().model("User", userSchema);
+async function findUserByEmail(givenEmail) {
+	const userModel = getConnection("User").model("User", userSchema);
 	try {
-		return await findByNameAndIdAndDelete(id); //write search algorithm
+		return await userModel.find({email:givenEmail}).lean();
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+
+async function deleteUser(id) {
+	const userModel = getConnection("User").model("User", userSchema);
+	try {
+		return await userModel.deleteOne({_id: id});
+		//return await findByNameAndIdAndDelete(id); //write search algorithm
 	} catch (error) {
 		console.log(error);
 		return false;
@@ -105,3 +119,4 @@ exports.deleteProduct = deleteProduct;
 exports.getUser = getUser;
 exports.addUser = addUser;
 exports.deleteUser = deleteUser;
+exports.findUserByEmail = findUserByEmail;

@@ -7,4 +7,27 @@ Link to our Component Diagram: https://app.diagrams.net/?libs=general;uml#G1x_Ya
 
 This project primarily follows the style and formatting rules outlined by Prettier: https://prettier.io/docs/en/options.html.
 
-We set up Prettier as a VSCode plugin by Googling "vscode prettier", visiting https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode, clicking "Install", giving VSCode permission to open, and again clicking "Install". We then configured Prettier using the auto-format keyboard shortcut Shift/Option/F, which presented the option to use Prettier for the default formatting rules.
+Frontend Dependencies:  
+-axios v0.24.0  
+-bootstrap v5.1.3  
+-cra-template v1.1.2  
+-react v17.0.2  
+-react-bootstrap v2.0.1  
+-react-dom v17.0.2  
+-react-router-dom v5.3.0  
+-react-scripts v4.0.3  
+  
+Backend Dependencies:  
+-node  
+-express v4.17.1  
+-cors v2.8.5  
+-bcryptjs  
+-jsonwebtoken v8.5.1  
+-dotenv v10.0.0  
+-nodemon  
+  
+Database Dependencies:  
+-MongoDB (not npm install)  
+-mongoose v6.0.10  
+-dotenv v10.0.0  
+-bcryptjs  

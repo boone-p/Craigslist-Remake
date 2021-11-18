@@ -1,10 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-// use these to install bycrpt in database folder
-// npm install node-gyp -g
-// npm install bcrypt -g
-
-// npm install bcrypt --save
 
 const userSchema = new mongoose.Schema(
     {
@@ -32,9 +27,6 @@ const userSchema = new mongoose.Schema(
 				if ((value.length < 1) || (value.length > 255)) throw new Error("Invalid password.");
 			},
         },
-        productsAvailable: {
-            type: [String]
-        }
     },
     {collection: "usersList"}
 );
@@ -51,16 +43,5 @@ userSchema.pre('save', function(next) {
        })
     }
 })
-
-userSchema.methods.validateLogin = async function(password) {
-    if(!password) throw new Error("password is missing")
-
-    try{
-        const result = await bcrypt.compare(password, this.password)
-        return result;
-    } catch (error) {
-        console.log('passsword is invalid', error.message)
-    }
-}
 
 module.exports = userSchema;
