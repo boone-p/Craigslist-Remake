@@ -30,7 +30,7 @@ function App() {
 		console.log(localStorage.getItem("token"))
 
 		try {
-            const response = await axios.get("http://localhost:5000/", {
+            const response = await axios.get("http://localhost:5001/", {
 				headers: {
 					authorization : "Bearer " + localStorage.getItem("token")
 				}
@@ -73,7 +73,7 @@ function App() {
 
 	async function makeLoginPostCall(user) {
 		try {
-		   const response = await axios.post('http://localhost:5000/login', user);
+		   const response = await axios.post('http://localhost:5001/login', user);
 		   console.log("response in makeLoginPostCall")
 		   console.log(response.data)
 		   return response;
@@ -86,7 +86,7 @@ function App() {
 	
 	async function makePostCall(product) {
 		try {
-			const response = await axios.post('http://localhost:5000/products', product, {
+			const response = await axios.post('http://localhost:5001/products', product, {
 				headers: {
 					authorization : "Bearer " + localStorage.getItem("token")
 				}
@@ -102,7 +102,7 @@ function App() {
 
 	async function makeUserPostCall(user) {
 		try {
-		   const response = await axios.post('http://localhost:5000/register', user);
+		   const response = await axios.post('http://localhost:5001/register', user);
 		   console.log("response in makeUserPostCall")
 		   console.log(response)
 		   return response;

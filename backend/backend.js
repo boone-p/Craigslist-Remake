@@ -1,17 +1,17 @@
 const express = require("express");
 const cors = require("cors");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dbServices = require("../database/database");
 
 const app = express();
-const port = 5000;
+const port = 5001;
 app.use(cors());
 app.use(express.json());
 
 app.get('/', authenticateToken, async (req, res) => {
 	const result = await dbServices.getProducts()
-	res.send({ productList: result });
+	res.send({productList: result});
 });
 
 app.post('/login', async (req, res) => {
@@ -32,7 +32,7 @@ app.post('/login', async (req, res) => {
 			res.status(201).json({
 				token: token,
 				email: user[0].email,
-				id: user[0]._id,
+				id: user[0]._id
 			});
 		}
 	});

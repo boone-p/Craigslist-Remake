@@ -6,15 +6,16 @@ dotenv.config();
 
 let conn;
 
-function getConnection(type) {
+function getConnection() {
 	if (!conn) {
 		if (process.argv.includes("--prod")) {
+			console.log("Connecting to Atlas DB...\n");
 			conn = mongoose.createConnection(
 				"mongodb+srv://" +
 					process.env.MONGO_USER +
 					":" +
 					process.env.MONGO_PWD +
-					"@freestuffapp.dycx2.mongodb.net/" +
+					"@freestuffapp.rezg1.mongodb.net/" +
 					process.env.MONGO_DB +
 					"?retryWrites=true&w=majority",
 				{
@@ -23,27 +24,18 @@ function getConnection(type) {
 				});
 		}
 		else {
-			if (type === "Product") {
-				conn = mongoose.createConnection("mongodb://127.0.0.1:27017/products",
-				{
-					useNewUrlParser: true,
-					useUnifiedTopology: true,
-				});
-			}
-			else {
-				conn = mongoose.createConnection("mongodb://127.0.0.1:27017/users",
-				{
-					useNewUrlParser: true,
-					useUnifiedTopology: true,
-				});
-			}
+			conn = mongoose.createConnection("mongodb://127.0.0.1:27017/freestuffapp",
+			{
+				useNewUrlParser: true,
+				useUnifiedTopology: true,
+			});
 		}
 	}
 	return conn;
 }
 
 async function getProducts(criteria) {
-	const productModel = getConnection("Product").model("Product", productSchema);
+	const productModel = getConnection().model("Product", productSchema);
 	let result;
 	if (criteria === undefined) result = await productModel.find();
 	else {}
@@ -51,7 +43,7 @@ async function getProducts(criteria) {
 }
 
 async function addProduct(product) {
-	const productModel = getConnection("Product").model("Product", productSchema);
+	const productModel = getConnection().model("Product", productSchema);
 	try {
 		const prodToAdd = new productModel(product);
 		const savedProd = await prodToAdd.save();
@@ -63,7 +55,7 @@ async function addProduct(product) {
 }
 
 async function deleteProduct(id) {
-	const productModel = getConnection("Product").model("Product", productSchema);
+	const productModel = getConnection().model("Product", productSchema);
 	try {
 		return await findByIdAndDelete(id); //write search algorithm
 	} catch (error) {
@@ -73,7 +65,7 @@ async function deleteProduct(id) {
 }
 
 async function getUser(name) {
-	const userModel = getConnection("User").model("User", userSchema);
+	const userModel = getConnection().model("User", userSchema);
 	let result;
 	if (name === undefined) result = await userModel.find();
 	else {}
@@ -93,7 +85,7 @@ async function addUser(user) {
 }
 
 async function findUserByEmail(givenEmail) {
-	const userModel = getConnection("User").model("User", userSchema);
+	const userModel = getConnection().model("User", userSchema);
 	try {
 		return await userModel.find({email:givenEmail}).lean();
 	} catch (error) {
@@ -103,7 +95,7 @@ async function findUserByEmail(givenEmail) {
 }
 
 async function deleteUser(id) {
-	const userModel = getConnection("User").model("User", userSchema);
+	const userModel = getConnection().model("User", userSchema);
 	try {
 		return await userModel.deleteOne({_id: id});
 		//return await findByNameAndIdAndDelete(id); //write search algorithm
