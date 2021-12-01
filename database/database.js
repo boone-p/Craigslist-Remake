@@ -175,7 +175,7 @@ function getSellerName(id) {
 	// findById to get user name from the product's seller _id, not tested yet
 
 	const userModel = getConnection().model("User", UserSchema);
-	return userModel.getUsers(id).name;
+	return userModel.getUser(id).name;
 
 	// return id;
 
