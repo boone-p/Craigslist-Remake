@@ -248,7 +248,7 @@ async function deleteProduct(id) {
  * Returns all users if id is an empty string, or the user with that id otherwise
  * @param {*} id : user _id or an empty string
  */
-async function getUsers(id) {
+async function getUser(id) {
 	const userModel = getConnection().model("User", UserSchema);
 	if (!(id === "")) {
 		// find user by id
