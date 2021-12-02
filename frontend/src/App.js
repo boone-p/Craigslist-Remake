@@ -7,16 +7,19 @@ import Register from './Register';
 import Login from './Login';
 import Sidebar from './Sidebar'
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 import {
 	BrowserRouter as Router,
-	Switch,
+	Routes,
 	Route,
   } from "react-router-dom";
 
 
 function App() {
 
-	const[products, setProducts] = useState([])
+	const[products, setProducts] = useState({})
+	const[user, setUser] = useState([])
+	const [cookies, setCookie] = useCookies(['user']);
 
 	useEffect(() => {
 		fetchAll().then( result => {
@@ -47,6 +50,8 @@ function App() {
 	  }  
 
 	function addProduct(product) { 
+		console.log("product in App.js addProduct")
+		console.log(product)
 		makePostCall(product).then( result => {
 		if (result && result.status === 201)
 		  setProducts([...products, result.data]);
@@ -67,6 +72,11 @@ function App() {
 			if (result && result.status === 201) {
 				console.log("login data from loginUser")
 				console.log(result.data.token)
+				console.log(result.data.email)
+
+				setCookie('Email', result.data.email, { path: '/' });
+
+				console.log(user)
 				localStorage.setItem("token", result.data.token);
 			}
 		});
@@ -89,13 +99,16 @@ function App() {
 		try {
 			const response = await axios.post('http://localhost:5000/products', product, {
 				headers: {
-					authorization : "Bearer " + localStorage.getItem("token")
+					authorization : "Bearer " + localStorage.getItem("token"),
+					ContentType: 'application/json',
+					Accept: 'application/json'
 				}
 			});
 			console.log(response)
 			return response;
 		}
-		catch (error) { 
+		catch (error) {
+		   console.log("error in postCall:")
 		   console.log(error);
 		   return false;
 		}
@@ -114,36 +127,22 @@ function App() {
 		}
 	}
 
-
 	return (
 		<Router>
 			<div>
 
 				<Navbar/>
-				<Switch>
-					<Route path="/register">
-						<Register handleSubmit={addUser}/>
-					</Route>
+				<Routes>
 
-					<Route path="/login">
-						<Login handleSubmit={loginUser}/>
-					</Route>
-
-					<Route path="/submit">
-						<Form handleSubmit={addProduct} />
-					</Route>
-
-					<Route path="/about">
-						<About/>
-					</Route>
-
-					<Route path="/">
-
-						<Cards productData={products}/>
-						<Sidebar />
-
-					</Route>
-				</Switch>
+					<Route path="/register" element={<Register handleSubmit={addUser}/>}/>
+					<Route path="/login" element={<Login handleSubmit={loginUser}/>}/>
+					<Route path="/submit" element={<Form handleSubmit={addProduct}/>}/>
+					<Route path="/about" element={<About />}/>
+					<Route path="/" element={<Cards productData={products}/>}/>
+				
+				</Routes>
+						
+				<Sidebar />
 
 			</div>
 		</Router>

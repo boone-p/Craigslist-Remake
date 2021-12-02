@@ -26,8 +26,8 @@ const productSchema = new mongoose.Schema(
 		// 	required: true
 		// },
 		image: {
-			data: Buffer,
-			contentType: String,
+			type: String,
+			required: true
 		},
 		// seller: {
 		// 	type: String, //_id of user

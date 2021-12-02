@@ -18,14 +18,21 @@ function Form(props) {
             description: '',
             location: '',
             category: '',
-            contactInfo: ''
+            contactInfo: '',
+        }
+    );
+
+    const [productImage, setProductImage] = useState(
+        {
+            image: '',
+            contentType: ''
         }
     );
 
     function handleChange(event) {
-        let value = event.target.value;
+        let value = event.target.value
         let name = event.target.name
-
+        
         setProduct((prevalue) => {
             return {
               ...prevalue,             
@@ -34,9 +41,60 @@ function Form(props) {
           })
     }
 
-    function submitForm() {
-        props.handleSubmit(productData);
-        setProduct({title: '', description: '', location: '', category: '', contactInfo: ''});
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        }).then(response => JSON.stringify(response));
+    };
+    
+    function handleChangePic(event) {
+        const file = event.target.files[0];
+        const base64 = convertToBase64(file);
+        console.log("aaa")
+        console.log(base64)
+        if (file) {
+            setProductImage(() => {
+                return {           
+                    'image': convertToBase64(file),
+                    'contentType': file.type
+                }
+            });
+        }
+    }
+
+    // _handleReaderLoaded = (readerEvt) => {
+    //     let binStr = readerEvt.target.result
+    //     setProductImage(()=>{
+    //         return {
+    //             'image': binStr.toString('base64'),
+    //         }
+    //     })
+    // }
+
+    function submitForm(event) {
+        event.preventDefault()
+        // const formData = new FormData()
+        // formData.append('data',productData)
+        // formData.append('image', productImage)
+      
+
+    
+        var object = {'data': productData, 'image': productImage};
+        console.log("submitForm")
+        console.log(object['image'])
+        props.handleSubmit(object)
+        //props.handleSubmit(formData)
+
+
+        // setProduct({title: '', description: '', location: '', category: '', contactInfo: ''});
+        // setProductImage({picture: null});
     }
       
     return (
@@ -81,8 +139,17 @@ function Form(props) {
                 id="contactInfo"
                 value={productData.contactInfo}
                 onChange={handleChange} />
+            
+            <label htmlFor="picture">picture</label>
+            <input
+                type="file"
+                name="picture"
+                id="picture"
+                accept=".jpeg, .png, .jpg"
+                value={productImage.picture}
+                onChange={handleChangePic} />
 
-            <input type="button" value="Submit" style ={button} onClick={submitForm} />
+            <input type="button" value="Submit" style ={button} onClick={submitForm} /> 
 
         
         </form>

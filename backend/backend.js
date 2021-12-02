@@ -3,7 +3,8 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dbServices = require("../database/database");
-
+const multer = require("multer");
+const fs = require('fs')
 const app = express();
 const port = 5000;
 app.use(cors());
@@ -26,7 +27,7 @@ app.post('/login', async (req, res) => {
 		if (err) throw(err);
 		if (!result) res.status(401).end();
 		else {
-			const token = jwt.sign({_id: user[0]._id}, process.env.JWT_SECRET, {expiresIn: '45s'});
+			const token = jwt.sign({_id: user[0]._id}, process.env.JWT_SECRET, {expiresIn: '15m'});
 			console.log("token in backend login post");
 			console.log(token);
 			res.status(201).json({
@@ -58,9 +59,27 @@ function authenticateToken(req, res, next) {
 	next();
 }
 
-app.post('/products', authenticateToken, async (req, res) => {
+const storage = multer.diskStorage({
+	destination: function(req, file, cb) {
+		cb(null, "./images/");
+	},
+	filename: function(req, file, cb) {
+		cb(null, Date.now() + file.originalname);
+	}
+});
+
+const fileFilter = (req, file, cb) => {
+	if (file.mimetype === "image/jpeg" || file.mimetype === "image/png")
+		cb(null, true);
+	else
+		cb(new Error("Invalid file"), false);
+};
+
+app.post('/products', async (req, res) => { //to store the image from the post request in the images folder
+	console.log("made it here");
 	const productToAdd = req.body;
-	console.log(productToAdd)
+	console.log("product in /products")
+	console.log(productToAdd['image']['image'])
 	const savedProduct = await dbServices.addProduct(productToAdd);
 	if (savedProduct) res.status(201).send(savedProduct);
 	else res.status(500).end();
