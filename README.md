@@ -3,7 +3,7 @@ Group project for Intro to Software Engineering, a Craigslist remake using the M
 
 Link to our UI prototype: https://www.figma.com/file/HoJW3uMMTX8vUTr2DTaLBV/product-form-page?node-id=9%3A2. 
 
-Link to our Component Diagram: https://app.diagrams.net/?libs=general;uml#G1x_YaEbIvXLNYa_1bVEftvxYsdVj8CNHf. 
+Link to our Component Diagram: https://drive.google.com/file/d/1x_YaEbIvXLNYa_1bVEftvxYsdVj8CNHf/view?usp=sharing .
 
 This project primarily follows the style and formatting rules outlined by Prettier: https://prettier.io/docs/en/options.html.
 
