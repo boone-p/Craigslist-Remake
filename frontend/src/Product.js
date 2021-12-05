@@ -46,7 +46,7 @@ function Product(props) {
             <h1 style={title}>{product.contactInfo}</h1>
             <h1 style={title}>{product.location}</h1>
             <h1 style={title}>{product.description}</h1>
-            <img style={box} src={product.image} alt="No image"/> 
+            <img style={box} src={product.image} alt=""/> 
 
         </div>
 
