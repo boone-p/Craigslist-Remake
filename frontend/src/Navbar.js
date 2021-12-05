@@ -29,7 +29,7 @@ function MyNavbar(props) {
                     </NavDropdown>
                 </Nav>
                 <form className="d-flex">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <input className="form-control me-2" type="search" id="mySearch" placeholder="Search" aria-label="Search">
                 </input>
                 <button className="btn btn-outline-success" type="submit" onClick={() => searchInput()}>Search</button>
                 </form>
