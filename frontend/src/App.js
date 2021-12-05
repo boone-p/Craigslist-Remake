@@ -116,12 +116,26 @@ function App() {
 		   return false;
 		}
 	}
+	
+	async function HandleSearch(value) {
+		try {
+			const updated = { sidebar: [], searchbar: value };
+			const response = await axios.post(
+				"http://localhost:5001/search", 
+				updated
+			);
+			return response;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	}
 
 	return (
 		<Router>
 			<div>
 
-				<Navbar/>
+				<Navbar handleSubmit={HandleSearch} />
 				<Switch>
 
 					<Route path="/product/:id">
