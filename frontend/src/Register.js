@@ -60,7 +60,7 @@ function Register(props) {
                 
             <label htmlFor="password">password</label>
             <input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 value={userData.password}
@@ -69,7 +69,7 @@ function Register(props) {
 
             <label htmlFor="confirmPassword">confirm password</label>
             <input
-                type="text"
+                type="password"
                 name="confirmPassword"
                 id="confirmPassword"
                 value={userData.confirmPassword}

@@ -1,6 +1,11 @@
 import React from 'react';
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 
+function logout() {
+    localStorage.removeItem("token");
+    window.location.reload(false);
+}
+
 function MyNavbar() {
     return (
         <Navbar bg="light" expand="lg">
@@ -15,7 +20,7 @@ function MyNavbar() {
                     <Nav.Link href="/register">Register </Nav.Link>
                     <Nav.Link href="/login">Login </Nav.Link>
                     <NavDropdown title="User" id="basic-nav-dropdown">
-                        <NavDropdown.Item onClick = {() => localStorage.removeItem("token")}> Logout </NavDropdown.Item>
+                        <NavDropdown.Item onClick = {() => logout()}> Logout </NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
                 <form className="d-flex">

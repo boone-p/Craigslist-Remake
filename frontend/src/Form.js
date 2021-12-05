@@ -24,7 +24,7 @@ function Form(props) {
 
     const [productImage, setProductImage] = useState(
         {
-            image: '',
+            image: null,
             contentType: ''
         }
     );
@@ -40,33 +40,34 @@ function Form(props) {
             }
           })
     }
-
-    const convertToBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
-            fileReader.onload = () => {
-                resolve(fileReader.result);
-            };
-            fileReader.onerror = (error) => {
-                reject(error);
-            };
-        }).then(response => JSON.stringify(response));
-    };
     
-    function handleChangePic(event) {
+    function readFileAsBinary(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+    
+            reader.onload = (event) => {
+                resolve(event.target.result);
+            };
+    
+            reader.onerror = (err) => {
+                reject(err);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
+
+    async function handleChangePic(event) {
         const file = event.target.files[0];
-        const base64 = convertToBase64(file);
-        console.log("aaa")
-        console.log(base64)
+        console.log("handleChangePic")
         if (file) {
+            let result = await readFileAsBinary(file);
             setProductImage(() => {
-                return {           
-                    'image': convertToBase64(file),
-                    'contentType': file.type
-                }
+                console.log(result);
+                return result;
             });
         }
+        
     }
 
     // _handleReaderLoaded = (readerEvt) => {
@@ -83,18 +84,25 @@ function Form(props) {
         // const formData = new FormData()
         // formData.append('data',productData)
         // formData.append('image', productImage)
+        // console.log("formData in submitForm()")
+        // for (var [key, value] of formData.entries()) { 
+        //     console.log(key, value);
+        // }
       
-
-    
-        var object = {'data': productData, 'image': productImage};
-        console.log("submitForm")
-        console.log(object['image'])
+        var object = {
+                        "title": productData.title, 
+                        "description": productData.description, 
+                        "location": productData.location, 
+                        "category": productData.category, 
+                        "contactInfo": productData.contactInfo, 
+                        "image": productImage
+                    }
         props.handleSubmit(object)
         //props.handleSubmit(formData)
 
 
-        // setProduct({title: '', description: '', location: '', category: '', contactInfo: ''});
-        // setProductImage({picture: null});
+        setProduct({title: '', description: '', location: '', category: '', contactInfo: ''});
+        setProductImage({picture: null});
     }
       
     return (

@@ -7,19 +7,17 @@ import Register from './Register';
 import Login from './Login';
 import Sidebar from './Sidebar'
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
+import Product from './Product';
+
 import {
 	BrowserRouter as Router,
-	Routes,
+	Switch,
 	Route,
   } from "react-router-dom";
 
 
 function App() {
-
-	const[products, setProducts] = useState({})
-	const[user, setUser] = useState([])
-	const [cookies, setCookie] = useCookies(['user']);
+	const[products, setProducts] = useState([])
 
 	useEffect(() => {
 		fetchAll().then( result => {
@@ -34,7 +32,7 @@ function App() {
 		console.log(localStorage.getItem("token"))
 
 		try {
-            const response = await axios.get("http://localhost:5000/", {
+            const response = await axios.get("http://localhost:5001/", {
 				headers: {
 					authorization : "Bearer " + localStorage.getItem("token")
 				}
@@ -50,8 +48,6 @@ function App() {
 	  }  
 
 	function addProduct(product) { 
-		console.log("product in App.js addProduct")
-		console.log(product)
 		makePostCall(product).then( result => {
 		if (result && result.status === 201)
 		  setProducts([...products, result.data]);
@@ -72,11 +68,6 @@ function App() {
 			if (result && result.status === 201) {
 				console.log("login data from loginUser")
 				console.log(result.data.token)
-				console.log(result.data.email)
-
-				setCookie('Email', result.data.email, { path: '/' });
-
-				console.log(user)
 				localStorage.setItem("token", result.data.token);
 			}
 		});
@@ -84,7 +75,7 @@ function App() {
 
 	async function makeLoginPostCall(user) {
 		try {
-		   const response = await axios.post('http://localhost:5000/login', user);
+		   const response = await axios.post('http://localhost:5001/login', user);
 		   console.log("response in makeLoginPostCall")
 		   console.log(response.data)
 		   return response;
@@ -96,19 +87,18 @@ function App() {
 	}
 	
 	async function makePostCall(product) {
+		console.log("makePostCall")
+		console.log(product)
 		try {
-			const response = await axios.post('http://localhost:5000/products', product, {
+			const response = await axios.post('http://localhost:5001/product', product, {
 				headers: {
-					authorization : "Bearer " + localStorage.getItem("token"),
-					ContentType: 'application/json',
-					Accept: 'application/json'
+					authorization : "Bearer " + localStorage.getItem("token")
 				}
 			});
-			console.log(response)
+
 			return response;
 		}
-		catch (error) {
-		   console.log("error in postCall:")
+		catch (error) { 
 		   console.log(error);
 		   return false;
 		}
@@ -116,7 +106,7 @@ function App() {
 
 	async function makeUserPostCall(user) {
 		try {
-		   const response = await axios.post('http://localhost:5000/register', user);
+		   const response = await axios.post('http://localhost:5001/register', user);
 		   console.log("response in makeUserPostCall")
 		   console.log(response)
 		   return response;
@@ -132,17 +122,36 @@ function App() {
 			<div>
 
 				<Navbar/>
-				<Routes>
+				<Switch>
 
-					<Route path="/register" element={<Register handleSubmit={addUser}/>}/>
-					<Route path="/login" element={<Login handleSubmit={loginUser}/>}/>
-					<Route path="/submit" element={<Form handleSubmit={addProduct}/>}/>
-					<Route path="/about" element={<About />}/>
-					<Route path="/" element={<Cards productData={products}/>}/>
-				
-				</Routes>
-						
-				<Sidebar />
+					<Route path="/product/:id">
+							<Product />
+					</Route>
+					
+					<Route path="/register">
+						<Register handleSubmit={addUser}/>
+					</Route>
+
+					<Route path="/login">
+						<Login handleSubmit={loginUser}/>
+					</Route>
+
+					<Route path="/submit">
+						<Form handleSubmit={addProduct} />
+					</Route>
+
+					<Route path="/about">
+						<About/>
+					</Route>
+
+					<Route path="/">
+						<Cards productData={products}/>
+						<Sidebar />
+					</Route>
+					
+
+
+				</Switch>
 
 			</div>
 		</Router>

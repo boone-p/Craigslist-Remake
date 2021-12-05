@@ -50,7 +50,7 @@ function Login(props) {
 
             <label htmlFor="password">password</label>
             <input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 value={loginData.password}

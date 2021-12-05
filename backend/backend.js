@@ -1,18 +1,32 @@
 const express = require("express");
 const cors = require("cors");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dbServices = require("../database/database");
-const multer = require("multer");
-const fs = require('fs')
+const dotenv = require("dotenv");
+dotenv.config({path: "../.env"});
+
 const app = express();
-const port = 5000;
+const port = 5001;
 app.use(cors());
-app.use(express.json());
+app.use(express.json({limit: '20mb'}));
+app.use(express.urlencoded({extended: true, limit: '20mb'}));
 
 app.get('/', authenticateToken, async (req, res) => {
-	const result = await dbServices.getProducts()
-	res.send({ productList: result });
+	const result = await dbServices.getProductsLanding()
+	res.send({productList: result});
+});
+
+app.get('/product/:id', async (req, res) => {
+	const product = await dbServices.findProductById(req.params['id']);
+	console.log("product in backend.js")
+	console.log(product[0].title)
+	if (product === undefined || product.length == 0) {
+		res.status(404).send("Product not found");
+	}
+	else {
+		res.send({productList: product});
+	}
 });
 
 app.post('/login', async (req, res) => {
@@ -33,7 +47,7 @@ app.post('/login', async (req, res) => {
 			res.status(201).json({
 				token: token,
 				email: user[0].email,
-				id: user[0]._id,
+				id: user[0]._id
 			});
 		}
 	});
@@ -59,30 +73,16 @@ function authenticateToken(req, res, next) {
 	next();
 }
 
-const storage = multer.diskStorage({
-	destination: function(req, file, cb) {
-		cb(null, "./images/");
-	},
-	filename: function(req, file, cb) {
-		cb(null, Date.now() + file.originalname);
-	}
-});
-
-const fileFilter = (req, file, cb) => {
-	if (file.mimetype === "image/jpeg" || file.mimetype === "image/png")
-		cb(null, true);
-	else
-		cb(new Error("Invalid file"), false);
-};
-
-app.post('/products', async (req, res) => { //to store the image from the post request in the images folder
-	console.log("made it here");
+app.post('/product', authenticateToken, async (req, res) => {
 	const productToAdd = req.body;
-	console.log("product in /products")
-	console.log(productToAdd['image']['image'])
+	console.log("PRODUCT TO ADD")
+	console.log(productToAdd)
 	const savedProduct = await dbServices.addProduct(productToAdd);
 	if (savedProduct) res.status(201).send(savedProduct);
-	else res.status(500).end();
+	else {
+		console.log("Saved incorrectly")
+		res.status(500).end();
+	}
 });
 
 app.post('/register', async (req, res) => {
@@ -91,16 +91,6 @@ app.post('/register', async (req, res) => {
 	if (savedUser) res.status(201).send(savedUser);
 	else res.status(500).end();
 	console.log(userToAdd);
-});
-
-app.delete('/products/:id', authenticateToken, (req, res) => {
-	const id = req.params["_id"];
-	let result = dbServices.findProductById(id);
-	if (result === undefined) res.status(404).end();
-	else {
-		dbServices.deleteProduct(id);
-		res.status(204).end();
-	}
 });
 
 app.listen(process.env.PORT || port, () => {

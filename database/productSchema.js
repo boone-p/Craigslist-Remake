@@ -18,8 +18,9 @@ const productSchema = new mongoose.Schema(
 				if ((value.length < 1) || (value.length > 1024)) throw new Error("Invalid description.");
 			},
 		},
-		categories: {
-			type: [String]
+		category: {
+			type: String,
+			required: true
 		},
 		// condition: {
 		// 	type: String,
@@ -29,13 +30,13 @@ const productSchema = new mongoose.Schema(
 			type: String,
 			required: true
 		},
-		// seller: {
-		// 	type: String, //_id of user
-		// 	required: true,
-		// },
+		contactInfo: {
+			type: String, //_id of user
+			required: true,
+		},
 		location: {
 			type: String,
-			required: true,
+			required: true
 		},
 		datePosted: {
 			type: Date,
@@ -43,7 +44,7 @@ const productSchema = new mongoose.Schema(
 			default: Date.now
 		}
 	},
-	{ collection: "productList" }
+	{ collection: "Products" }
 );
 
 module.exports = productSchema;

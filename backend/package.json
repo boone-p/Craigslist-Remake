@@ -1,11 +1,7 @@
 {
-  "name": "expressjs-backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "backend.js",
   "dependencies": {
     "axios": "^0.21.4",
-    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -19,7 +15,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon backend.js",
-    "start": "node backend.js"
+    "start": "node backend.js --prod"
   },
   "author": "",
   "license": "ISC"
