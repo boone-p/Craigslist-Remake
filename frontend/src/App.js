@@ -7,6 +7,8 @@ import Register from './Register';
 import Login from './Login';
 import Sidebar from './Sidebar'
 import axios from 'axios';
+import Product from './Product';
+
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -85,13 +87,15 @@ function App() {
 	}
 	
 	async function makePostCall(product) {
+		console.log("makePostCall")
+		console.log(product)
 		try {
-			const response = await axios.post('http://localhost:5001/products', product, {
+			const response = await axios.post('http://localhost:5001/product', product, {
 				headers: {
 					authorization : "Bearer " + localStorage.getItem("token")
 				}
 			});
-			console.log(response)
+
 			return response;
 		}
 		catch (error) { 
@@ -119,6 +123,11 @@ function App() {
 
 				<Navbar/>
 				<Switch>
+
+					<Route path="/product/:id">
+							<Product />
+					</Route>
+					
 					<Route path="/register">
 						<Register handleSubmit={addUser}/>
 					</Route>
@@ -136,11 +145,12 @@ function App() {
 					</Route>
 
 					<Route path="/">
-
 						<Cards productData={products}/>
 						<Sidebar />
-
 					</Route>
+					
+
+
 				</Switch>
 
 			</div>

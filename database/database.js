@@ -38,21 +38,29 @@ function getConnection() {
 	return conn;
 }
 
-/**
- * Gets and filters products based on the sidebar and search bar inputs
- * @param {*} sidebarCriteria : array with [“_id”, "condition", "category", "date posted"] included with values
- * if being filtered for or empty strings if not being filtered for
- * @param {*} searchCriteria : string representing the search bar input, empty string if nothing searched
- */
+// /**
+//  * Gets and filters products based on the sidebar and search bar inputs
+//  * @param {*} sidebarCriteria : array with [“_id”, "condition", "category", "date posted"] included with values
+//  * if being filtered for or empty strings if not being filtered for
+//  * @param {*} searchCriteria : string representing the search bar input, empty string if nothing searched
+//  */
 async function getProducts(sidebarCriteria, searchCriteria) {
 	// change to accept search and sidebar criteria, filter by sidebar and then search bar
 	let products = await getProductsSidebar(sidebarCriteria);
 	return filterProductsSearch(products, searchCriteria);
 }
 
+async function getProductsLanding(criteria) {
+	const productModel = getConnection("Product").model("Product", productSchema);
+	let result;
+	if (criteria === undefined) result = await productModel.find();
+	else {}
+	return result;
+}
+
 // criteriaList = [“_id”, "condition", "category", "date posted"]
 async function getProductsSidebar(criteriaList) {
-	const productModel = getConnection().model("Product", ProductSchema);
+	const productModel = getConnection().model("Product", productSchema);
 	let filter = 0;
 	// if _id not in search criteria, filter by other criteria
 	if (!(criteriaList[0] === "")) {
@@ -221,14 +229,28 @@ function dynamicSimilarity(s1, s2) {
 	return (len - ed) / len;
 }
 
-async function addProduct(product, user_id) {
+
+async function addProduct(product) {
+	console.log("product in addProduct")
+	console.log(product)
 	const productModel = getConnection().model("Product", productSchema);
 	try {
 		const prodToAdd = new productModel(product);
-		prodToAdd.seller = user_id;
 		const savedProd = await prodToAdd.save();
 		return savedProd;
 	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+
+async function findProductById(id) {
+	const productModel = getConnection().model("Product", productSchema);
+	try {
+		let _id = mongoose.Types.ObjectId(id)
+		return await productModel.find({_id: _id}).lean();
+	} catch (error) {
+		console.log("NOT FOUND IN FINDBYID")
 		console.log(error);
 		return false;
 	}
@@ -291,6 +313,7 @@ async function deleteUser(id) {
 	}
 }
 
+exports.getProductsLanding = getProductsLanding;
 exports.getProducts = getProducts;
 exports.addProduct = addProduct;
 exports.deleteProduct = deleteProduct;
@@ -298,3 +321,4 @@ exports.getUser = getUser;
 exports.addUser = addUser;
 exports.deleteUser = deleteUser;
 exports.findUserByEmail = findUserByEmail;
+exports.findProductById = findProductById;
