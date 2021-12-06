@@ -8,7 +8,7 @@ Link to our UI Prototype: https://www.figma.com/file/HoJW3uMMTX8vUTr2DTaLBV/prod
 
 Link to our Component Diagram: https://drive.google.com/file/d/1x_YaEbIvXLNYa_1bVEftvxYsdVj8CNHf/view?usp=sharing 
 
-Link to our Class Diagram: https://drive.google.com/drive/u/1/folders/0AFu4tuZPxMqsUk9PVA  
+Link to our Class Diagram: https://drive.google.com/file/d/1UeNfmCKKfKcF0WCdpJQjHTg38GqxIauf/view?usp=sharing
 
 DEVELOPMENT ENVIRONMENT SETUP:
 
