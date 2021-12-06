@@ -20,8 +20,6 @@ Frontend Dependencies: {
      "cra-template": "1.1.2",  
      "react": "^17.0.2",  
      "react-bootstrap": "^2.0.2",  
-     "react-cookie": "^4.1.1",  
-     "react-cookies": "^0.1.1",  
      "react-dom": "^17.0.2",  
      "react-router-dom": "^5.3.0",  
      "react-scripts": "^4.0.3"  
