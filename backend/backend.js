@@ -33,8 +33,6 @@ app.get('/', authenticateToken, async (req, res) => {
 
 app.get('/product/:id', async (req, res) => {
 	const product = await dbServices.findProductById(req.params['id']);
-	console.log("product in backend.js")
-	console.log(product[0].title)
 	if (product === undefined || product.length == 0) {
 		res.status(404).send("Product not found");
 	}
@@ -45,10 +43,7 @@ app.get('/product/:id', async (req, res) => {
 
 app.post('/login', async (req, res) => {
 	const user = await dbServices.findUserByEmail(req.body.email);
-	console.log("user from the backend")
-	console.log(user)
 	if (user.length == 0) {
-		console.log("Invalid username/password combination")
 		res.status(401).end();
 	}	
 	bcrypt.compare(req.body.password, user[0].password, (err, result) => {
@@ -56,8 +51,6 @@ app.post('/login', async (req, res) => {
 		if (!result) res.status(401).end();
 		else {
 			const token = jwt.sign({_id: user[0]._id}, process.env.JWT_SECRET, {expiresIn: '15m'});
-			console.log("token in backend login post");
-			console.log(token);
 			res.status(201).json({
 				token: token,
 				email: user[0].email,
@@ -70,32 +63,24 @@ app.post('/login', async (req, res) => {
 function authenticateToken(req, res, next) {
 	const authHeader = req.headers.authorization;
 	const token = authHeader && authHeader.split(" ")[1];
-	console.log("token in authenticateToken")
-	console.log(token)
 	if (token === undefined) {
-		console.log("NO TOKEN");
-		return res.status(401).end();
+		return res.status(401).send("Invalid Login");
 	}
 	try {
 		const id = jwt.verify(token, process.env.JWT_SECRET);
 		req._id = id;
 	} catch(error) {
-		console.log("EXPIRED TOKEN");
-		return res.status(401).end();
+		return res.status(401).send("Invalid Login");
 	}
-	console.log("USER AUTHENTICATED");
 	next();
 }
 
 app.post('/product', authenticateToken, async (req, res) => {
 	const productToAdd = req.body;
-	console.log("PRODUCT TO ADD")
-	console.log(productToAdd)
 	const savedProduct = await dbServices.addProduct(productToAdd);
 	if (savedProduct) res.status(201).send(savedProduct);
 	else {
-		console.log("Saved incorrectly")
-		res.status(500).end();
+		res.status(500).send("Saved incorrectly");
 	}
 });
 
@@ -104,7 +89,6 @@ app.post('/register', async (req, res) => {
 	const savedUser = await dbServices.addUser(userToAdd);
 	if (savedUser) res.status(201).send(savedUser);
 	else res.status(500).end();
-	console.log(userToAdd);
 });
 
 app.listen(process.env.PORT || port, () => {
