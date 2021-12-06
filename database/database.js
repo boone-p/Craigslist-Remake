@@ -182,8 +182,7 @@ function filterProductsSearch(products, searchString) {
 function getSellerName(id) {
 	// findById to get user name from the product's seller _id, not tested yet
 
-	const userModel = getConnection().model("User", UserSchema);
-	return userModel.getUser(id).name;
+	return getUser(id).name;
 
 	// return id;
 
@@ -271,7 +270,7 @@ async function deleteProduct(id) {
  * @param {*} id : user _id or an empty string
  */
 async function getUser(id) {
-	const userModel = getConnection().model("User", UserSchema);
+	const userModel = getConnection().model("User", userSchema);
 	if (!(id === "")) {
 		// find user by id
 		return await userModel.findById(id); // might need to convert from string to ObjectID type
