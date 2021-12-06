@@ -1,8 +1,8 @@
 # Intro to Software Engineering Fall 2021 Project
 
-The Free Stuff App drew inspiration from poplular eCommerce websites such as CraigsList or Amazon.  We wanted to implement features that mimicked these websites to get a better understanding of real world applications.  Some standout features are our user authentication system, our search engine system, and our image submission form.  These were the three core implementations that took up the most time during the development process and replicates what a professional web application would do.
-
 [![freestuffapp CI](https://github.com/Free-Stuff-App/csc307project/actions/workflows/node.js.yml/badge.svg)](https://github.com/Free-Stuff-App/csc307project/actions/workflows/node.js.yml)
+
+The Free Stuff App drew inspiration from poplular eCommerce websites such as CraigsList or Amazon.  We wanted to implement features that mimicked these websites to get a better understanding of real world applications.  Some standout features are our user authentication system, our search engine system, and our image submission form.  These were the three core implementations that took up the most time during the development process and replicates what a professional web application would do.
 
 This project primarily follows the style and formatting rules outlined by Prettier: https://prettier.io/docs/en/options.html    
 
