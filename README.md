@@ -40,6 +40,8 @@ Database Dependencies: {
      "mongoose": "^6.0.10",  
      "mongodb-memory-server": "^8.0.4"  
      }  
+     
+ Add mongoDB Atlas login environment variables to .env  
 
 CODE COVERAGE REPORT:
 ------------------|---------|----------|---------|---------|-------------------
