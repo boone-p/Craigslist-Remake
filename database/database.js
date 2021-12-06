@@ -135,6 +135,7 @@ function checkProductDate(diff, constraint) {
 function filterProductsSearch(products, searchString) {
 	// verify that there search criteria exists
 	if (searchString === "") return products;
+	let threshold = 0.65;
 	// break search into individual words
 	let searchWords = searchString.split(" ");
 	// list of {product, score} tuples
@@ -155,8 +156,8 @@ function filterProductsSearch(products, searchString) {
 						pword.toLowerCase(),
 						sword.toLowerCase()
 					);
-					rs[i] += lev;
-					// if (lev > threshold) rs[i] += 1;
+					// rs[i] += lev;
+					if (lev > threshold) rs[i] += lev;
 				});
 			});
 		}
