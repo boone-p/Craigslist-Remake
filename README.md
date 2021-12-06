@@ -42,6 +42,7 @@ Backend Dependencies:
     "devDependencies": {
       "nodemon": "^2.0.13"
     }
+    
 Database Dependencies:  
   "dependencies": {
     "bcryptjs": "^2.4.3",
