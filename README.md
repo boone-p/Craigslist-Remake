@@ -1,8 +1,7 @@
 # Intro to Software Engineering Fall 2021 Project
 
 [![freestuffapp CI](https://github.com/Free-Stuff-App/csc307project/actions/workflows/node.js.yml/badge.svg)](https://github.com/Free-Stuff-App/csc307project/actions/workflows/node.js.yml)
-This project primarily follows the style and formatting rules outlined by Prettier: https://prettier.io/docs/en/options.html.
-
+This project primarily follows the style and formatting rules outlined by Prettier: https://prettier.io/docs/en/options.html.                                     
 Link to our UI Prototype: https://www.figma.com/file/HoJW3uMMTX8vUTr2DTaLBV/product-form-page?node-id=9%3A2 .
 Link to our Component Diagram: https://drive.google.com/file/d/1x_YaEbIvXLNYa_1bVEftvxYsdVj8CNHf/view?usp=sharing  .                                             
 Link to our Class Diagram: https://drive.google.com/drive/u/1/folders/0AFu4tuZPxMqsUk9PVA  .
