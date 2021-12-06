@@ -27,8 +27,8 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: |
-          working-directory: database
           npm test
+          working-directory: database
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
