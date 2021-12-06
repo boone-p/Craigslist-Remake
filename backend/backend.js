@@ -12,8 +12,22 @@ app.use(cors());
 app.use(express.json({limit: '20mb'}));
 app.use(express.urlencoded({extended: true, limit: '20mb'}));
 
+const search = {
+	filter: {sidebar: ["", "", "", ""], searchbar: ""}
+}
+
+app.post('/search', async (req, res) => { // authenticateToken
+	if(req.body["sidebar"].length==4) {
+		search.filter.sidebar = req.body["sidebar"];
+	}
+	if(!(req.body["searchbar"]=="")) {
+		search.filter.searchbar = req.body["searchbar"];
+	}
+});
+
 app.get('/', authenticateToken, async (req, res) => {
-	const result = await dbServices.getProductsLanding()
+	//const result = await dbServices.getProductsLanding()
+	const result = await dbServices.getProducts(search.filter["sidebar"], search.filter["searchbar"]);
 	res.send({productList: result});
 });
 
