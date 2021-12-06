@@ -141,8 +141,7 @@ function filterProductsSearch(products, searchString) {
 	prodScores = [];
 	products.forEach((prod) => {
 		// complie product keywords from title, description, seller, location, etc.
-		let sellerName = getSellerName(prod.seller); // get seller name from product's user _id
-		let prodStrs = [prod.title, sellerName, prod.description];
+		let prodStrs = [prod.title, prod.description, prod.location];
 		// list to accumulate points for each product search attribute
 		let rs = [0, 0, 0];
 		// compare each keyword to search and update product's score
@@ -162,7 +161,7 @@ function filterProductsSearch(products, searchString) {
 			});
 		}
 		// weight rs accordingly
-		let points = 10 * rs[0] + 6 * rs[1] + 9 * rs[2];
+		let points = 5 * rs[0] + 4 * rs[1] + 3 * rs[2];
 		// add tripple to list
 		prodScores.push({ product: prod, score: points });
 	});
@@ -177,16 +176,6 @@ function filterProductsSearch(products, searchString) {
 	});
 
 	return prodsSorted;
-}
-
-function getSellerName(id) {
-	// findById to get user name from the product's seller _id, not tested yet
-
-	return getUser(id).name;
-
-	// return id;
-
-	// // // // // // // // // // // // // // // // // // // // // // // //
 }
 
 /**
