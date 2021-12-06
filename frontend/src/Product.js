@@ -26,11 +26,6 @@ const i1 = {
     float: 'left',
     paddingLeft: '38px'
 }
-const i2 = {
-    fontSize: '12px',
-    float: 'right',
-    paddingRight: '1790px'
-}
 
 function Product(props) {
     const {id} = useParams();
