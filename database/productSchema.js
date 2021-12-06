@@ -5,33 +5,23 @@ const productSchema = new mongoose.Schema(
 		title: {
 			type: String,
 			required: true,
-			trim: true,
-			validate(value) {
-				if ((value.length < 1) || (value.length > 255)) throw new Error("Invalid title.");
-			},
+			trim: true
 		},
 		description: {
 			type: String,
 			required: true,
-			trim: true,
-			validate(value) {
-				if ((value.length < 1) || (value.length > 1024)) throw new Error("Invalid description.");
-			},
+			trim: true
 		},
 		category: {
 			type: String,
 			required: true
 		},
-		// condition: {
-		// 	type: String,
-		// 	required: true
-		// },
 		image: {
 			type: String,
 			required: true
 		},
 		contactInfo: {
-			type: String, //_id of user
+			type: String,
 			required: true,
 		},
 		location: {

@@ -16,6 +16,8 @@ const grid = {
 const box = {
     width: '19rem',
     maxHeight: '25rem',
+    // maxWidth: '21rem',
+    // maxHeight: '23rem',
     margin: '80px',
     boxShadow: '1px 1px 1px 1px #cccccc',
 }
@@ -25,12 +27,16 @@ const image = {
     marginLeft:'10px',
     height: '30vh',
     width: '95%'
+    // marginLeft:'1px',
+    // borderRadius: 55,
+    // width: '17vw',
+    // height: '29vh'
+
 }
 
 function RenderCards(props) {
     const cards = props.productData.map((product, index) => {
         return (
-        
                 <Card style = {box} key={index}>
 
                         <Link to={"/product/"+product._id}>

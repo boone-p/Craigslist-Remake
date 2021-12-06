@@ -6,26 +6,17 @@ const userSchema = new mongoose.Schema(
         name: {
             type: String,
             required: true,
-            trim: true,
-            validate(value) {
-				if ((value.length < 1) || (value.length > 50)) throw new Error("Invalid name.");
-			},
+            trim: true
         },
         email: {
             type: String,
             required: true,
             unique: true,
-            trim: true,
-            validate(value) {
-				if ((value.length < 5) || (value.length > 255)) throw new Error("Invalid email.");
-			},
+            trim: true
         },
         password: {
             type: String,
-            required: true,
-            validate(value) {
-				if ((value.length < 1) || (value.length > 255)) throw new Error("Invalid password.");
-			},
+            required: true
         },
     },
     {collection: "Users"}
@@ -33,15 +24,10 @@ const userSchema = new mongoose.Schema(
 
 //https://mongoosejs.com/docs/middleware.html#pre
 userSchema.pre('save', function(next) {
-    if(this.isModified('password')){
-        bcrypt.hash(this.password, 8, (err, hash) => {
-            if(err) {
-                return next(err);
-            }
-            this.password = hash;
-            next();
-       })
-    }
+    bcrypt.hash(this.password, 8, (err, hash) => {
+        this.password = hash;
+        next();
+    })
 })
 
 module.exports = userSchema;

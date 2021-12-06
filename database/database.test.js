@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const ProductSchema = require("./productSchema");
-const UserSchema = require("./userSchema");
+const productSchema = require("./productSchema");
+const userSchema = require("./userSchema");
 const dbServices = require("./database");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 
@@ -18,10 +18,10 @@ beforeAll(async () => {
 		useUnifiedTopology: true,
 	};
 
-	conn = await mongoose.createConnection(uri, mongooseOpts);
+	conn = mongoose.createConnection(uri, mongooseOpts);
 
-	productModel = conn.model("Product", ProductSchema);
-	userModel = conn.model("User", UserSchema);
+	productModel = conn.model("Product", productSchema);
+	userModel = conn.model("User", userSchema);
 
 	dbServices.setConnection(conn);
 });
@@ -35,6 +35,7 @@ afterAll(async () => {
 beforeEach(async () => {
 	let dummyUser = {
 		name: "Barry McKockiner",
+		_id: mongoose.Types.ObjectId("507f191e810c19729de860ea"),
 		email: "bmck@aol.com",
 		password: "b00b5021e022",
 	};
@@ -43,6 +44,7 @@ beforeEach(async () => {
 
 	dummyUser = {
 		name: "Bryce McLovin",
+		_id: mongoose.Types.ObjectId("507f191e810c19729de860eb"),
 		email: "runk@hotmail.com",
 		password: "8=-db_arsg",
 	};
@@ -51,6 +53,7 @@ beforeEach(async () => {
 
 	dummyUser = {
 		name: "Dustin Glockman",
+		_id: mongoose.Types.ObjectId("507f191e810c19729de860ec"),
 		email: "dusting@gmail.com",
 		password: "8sdf8f880_a0",
 	};
@@ -59,6 +62,7 @@ beforeEach(async () => {
 
 	dummyUser = {
 		name: "Clementine McLovin",
+		_id: mongoose.Types.ObjectId("507f191e810c19729de860ed"),
 		email: "cloveinmc@hotmail.com",
 		password: "8sdf8f880a0",
 	};
@@ -71,14 +75,13 @@ beforeEach(async () => {
 
 	let dummyProduct = {
 		title: "hair",
-		description: "I shaved my head want some hair?",
+		_id: mongoose.Types.ObjectId("507f191e810c19729df860ea"),
+		datePosted: "11/30/21",
 		category: "Gardening",
-		// condition: "Used",
-		image: "0",
-		contactInfo: "0",
+		description: "I shaved my head want some hair?",
 		location: "Bakersfield",
-		// seller: "Barry McKockiner",
-		datePosted: "12/5/21",
+		contactInfo: "Barry McKockiner",
+		image: "a",
 	};
 	// console.log(dummyProduct);
 	result = new productModel(dummyProduct);
@@ -89,14 +92,13 @@ beforeEach(async () => {
 
 	dummyProduct = {
 		title: "painting",
-		description: "its a painting but for gardening",
+		_id: mongoose.Types.ObjectId("507f191e710c19729de860ea"),
+		datePosted: "11/28/21",
 		category: "Gardening",
-		// condition: "Like New",
-		image: "0",
-		contactInfo: "0",
+		description: "its a painting but for gardening",
 		location: "Bakersfield",
-		// seller: "Larry McKockiner",
-		datePosted: "12/2/21",
+		contactInfo: "Larry McKockiner",
+		image: "b",
 	};
 	result = new productModel(dummyProduct);
 	await result.save();
@@ -105,14 +107,13 @@ beforeEach(async () => {
 
 	dummyProduct = {
 		title: "pianting",
-		description: "dont spel god but i piant good",
+		_id: mongoose.Types.ObjectId("507f191e810c19729de865ea"),
+		datePosted: "11/20/21",
 		category: "Household",
-		// condition: "Used",
-		image: "0",
-		contactInfo: "0",
+		description: "dont spel god but i piant good",
 		location: "Oceanside, CA",
-		// seller: "pablo del bosque",
-		datePosted: "11/26/21",
+		contactInfo: "pablo del bosque",
+		image: "c",
 	};
 	result = new productModel(dummyProduct);
 	await result.save();
@@ -121,14 +122,13 @@ beforeEach(async () => {
 
 	dummyProduct = {
 		title: "opainting",
-		description: "should show up for a paintint title search",
+		_id: mongoose.Types.ObjectId("507f191e810c16529de860ea"),
+		datePosted: "11/5/21",
 		category: "Household",
-		// condition: "New",
-		image: "0",
-		contactInfo: "0",
+		description: "should show up for a paintint title search",
 		location: "Cupertino, CA",
-		// seller: "itay rabinovic",
-		datePosted: "11/10/21",
+		contactInfo: "itay rabinovic",
+		image: "d",
 	};
 	result = new productModel(dummyProduct);
 	await result.save();
@@ -137,14 +137,13 @@ beforeEach(async () => {
 
 	dummyProduct = {
 		title: "Painting",
-		description: "Old painting that I found, might be good",
-		category: "Household",
-		// condition: "Good",
-		image: "0",
-		contactInfo: "0",
-		location: "Marin, CA",
-		// seller: "Darnel Simons",
+		_id: mongoose.Types.ObjectId("507f191f340c19729de860ea"),
 		datePosted: "6/7/21",
+		category: "Household",
+		description: "Old painting that I found, might be good",
+		location: "Marin, CA",
+		contactInfo: "Darnel Simons",
+		image: "e",
 	};
 	result = new productModel(dummyProduct);
 	await result.save();
@@ -153,14 +152,13 @@ beforeEach(async () => {
 
 	dummyProduct = {
 		title: "Painting",
-		description: "drew a picture of my head, kinda cool",
-		category: "Household",
-		// condition: "New",
-		image: "0",
-		contactInfo: "0",
-		location: "Ventura, CA",
-		// seller: "Maxie Simons",
+		_id: mongoose.Types.ObjectId("507f123e810c19729de860ea"),
 		datePosted: "11/8/19",
+		category: "Household",
+		description: "drew a picture of my head, kinda cool",
+		location: "Ventura, CA",
+		contactInfo: "Maxie Simons",
+		image: "f",
 	};
 	result = new productModel(dummyProduct);
 	await result.save();
@@ -169,14 +167,13 @@ beforeEach(async () => {
 
 	dummyProduct = {
 		title: "Flip phone",
-		description: "Don't need this anymore, who wants it?",
-		category: "Electronics",
-		// condition: "Good",
-		image: "0",
-		contactInfo: "0",
-		location: "Soledad, CA",
-		// seller: "leslie banks",
+		_id: mongoose.Types.ObjectId("427f191e810c19729de860ea"),
 		datePosted: "11/12/18",
+		category: "Electronics",
+		description: "Don't need this anymore, who wants it?",
+		location: "Soledad, CA",
+		contactInfo: "Leslie banks",
+		image: "g",
 	};
 	result = new productModel(dummyProduct);
 	await result.save();
@@ -185,14 +182,13 @@ beforeEach(async () => {
 
 	dummyProduct = {
 		title: "Brownies",
-		description: "Just some regular brownies that I made",
-		category: "Household",
-		// condition: "Like New",
-		image: "0",
-		contactInfo: "0",
-		location: "Mt Shasta, CA",
-		// seller: "dylan Simons",
+		_id: mongoose.Types.ObjectId("507f191e810c19729de542ea"),
 		datePosted: "4/31/19",
+		category: "Household",
+		description: "Just some regular brownies that I made",
+		location: "Mt Shasta, CA",
+		contactInfo: "Dylan Simons",
+		image: "h",
 	};
 	result = new productModel(dummyProduct);
 	await result.save();
@@ -268,43 +264,6 @@ test("Test filterProductsSearch", async () => {
 	titles.forEach((t) => expect(expectedTitles.includes(t)).toBe(true));
 });
 
-test("Test addProduct and findProductById", async () => {
-	let dummyProduct = {
-		title: "piano",
-		description: "old piano really cool plays well",
-		category: "Household",
-		image: "0",
-		contactInfo: "me",
-		location: "Bakersfield, CA",
-		datePosted: "12/5/21",
-	};
-	const prod = await dbServices.addProduct(dummyProduct);
-	expect(prod).toBeDefined();
-	expect(prod.title).toBe("piano");
-
-	// const prod2 = await dbServices.getProducts([prod._id, "", "", ""], "");
-	// expect(prod2.title).toBe("piano");
-
-	const prod3 = await dbServices.findProductById(prod._id);
-	expect(prod3.title).toBe("piano");
-});
-
-// test("Test findProductById", async () => {
-// 	const prods = await dbServices.getProducts(["", "", "", ""], "Brownies");
-// 	expect(prods).toBeDefined();
-// 	expect(prods.length).toBeGreaterThan(0);
-
-// 	prods.forEach(async (prod) => {
-// 		console.log(prod);
-// 		const title1 = prod.title;
-// 		const title2 = await dbServices.findProductById(prod._id).title;
-// 		const prod2 = await dbServices.getProducts([prod._id, "", "", ""], "");
-// 		console.log(title2);
-// 		console.log(prod2.title);
-// 		expect(title1).toBe(title2);
-// 	});
-// });
-
 // ["title","datePosted", "productID", "categories", "description", "condition", "seller"]
 test("Fetching all products", async () => {
 	const prods = await dbServices.getProducts(["", "", "", ""], "");
@@ -351,131 +310,6 @@ test("Fetching products by description", async () => {
 	titles.forEach((t) => expect(expectedTitles.includes(t)).toBe(true));
 });
 
-// criteriaList = [“_id”, "condition", "category", "date posted"]
-
-// test("Fetching products by category", async () => {
-// 	const category = "Household";
-// 	let expectedTitles = [
-// 		"pianting",
-// 		"opainting",
-// 		"Painting",
-// 		"Painting",
-// 		"Brownies",
-// 	];
-// 	const prods = await dbServices.getProducts(["", "", category, ""], "");
-// 	expect(prods).toBeDefined();
-// 	expect(prods.length).toBeGreaterThan(0);
-
-// 	let titles = [];
-// 	prods.forEach((prod) => titles.push(prod.title));
-// 	// console.log(titles);
-// 	expect(titles.length).toBe(expectedTitles.length);
-// 	titles.forEach((t) => expect(expectedTitles.includes(t)).toBe(true));
-// });
-
-// test("Fetching products by condition and category", async () => {
-// 	const condition = "New";
-// 	const category = "Household";
-// 	let expectedTitles = ["opainting", "Painting"];
-// 	const prods = await dbServices.getProducts(
-// 		["", condition, category, ""],
-// 		""
-// 	);
-// 	expect(prods).toBeDefined();
-// 	expect(prods.length).toBeGreaterThan(0);
-
-// 	let titles = [];
-// 	prods.forEach((prod) => titles.push(prod.title));
-// 	// console.log(titles);
-// 	expect(titles.length).toBe(expectedTitles.length);
-// 	titles.forEach((t) => expect(expectedTitles.includes(t)).toBe(true));
-// });
-
-// test("Fetching products by condition and title", async () => {
-// 	const condition = "New";
-// 	const search = "pianting";
-// 	let expectedConditions = ["New", "New"];
-// 	let expectedTitles = ["Painting", "opainting"];
-// 	const prods = await dbServices.getProducts(["", condition, "", ""], search);
-// 	expect(prods).toBeDefined();
-// 	expect(prods.length).toBeGreaterThan(0);
-
-// 	let titles = [];
-// 	let conditions = [];
-// 	prods.forEach((prod) => titles.push(prod.title));
-// 	prods.forEach((prod) => conditions.push(prod.condition));
-// 	// titles = titles.slice(0, expectedTitles.length);
-// 	// conditions = conditions.slice(0, expectedConditions.length);
-// 	// console.log(titles);
-// 	expect(titles.length).toBe(expectedTitles.length);
-// 	expect(conditions.length).toBe(expectedConditions.length);
-// 	titles.forEach((t) => expect(expectedTitles.includes(t)).toBe(true));
-// 	conditions.forEach((t) =>
-// 		expect(expectedConditions.includes(t)).toBe(true)
-// 	);
-// });
-
-// test("Fetching products by category and title", async () => {
-// 	const category = "Gardening";
-// 	const search = "pianting";
-// 	let expectedCategories = ["Gardening"];
-// 	let expectedTitles = ["painting"];
-// 	const prods = await dbServices.getProducts(["", "", category, ""], search);
-// 	expect(prods).toBeDefined();
-// 	expect(prods.length).toBeGreaterThan(0);
-
-// 	let titles = [];
-// 	let categories = [];
-// 	prods.forEach((prod) => titles.push(prod.title));
-// 	prods.forEach((prod) => categories.push(prod.category));
-// 	titles = titles.slice(0, expectedTitles.length);
-// 	categories = categories.slice(0, expectedCategories.length);
-// 	// console.log(titles);
-// 	// prods.forEach((prod) => console.log(prod.datePosted));
-// 	expect(titles.length).toBe(expectedTitles.length);
-// 	expect(categories.length).toBe(expectedCategories.length);
-// 	titles.forEach((t) => expect(expectedTitles.includes(t)).toBe(true));
-// 	categories.forEach((t) =>
-// 		expect(expectedCategories.includes(t)).toBe(true)
-// 	);
-// });
-
-// test("Fetching products by date 24 hours", async () => {
-// 	const prods = await dbServices.getProducts(
-// 		["", "", "", "Past 24 Hours"],
-// 		""
-// 	);
-// 	expect(prods).toBeDefined();
-// 	expect(prods.length).toBe(1);
-// });
-
-// test("Fetching products by date 1 Week", async () => {
-// 	const prods = await dbServices.getProducts(["", "", "", "Past Week"], "");
-// 	expect(prods).toBeDefined();
-// 	expect(prods.length).toBe(2);
-// });
-
-// test("Fetching products by date 2 Weeks", async () => {
-// 	const prods = await dbServices.getProducts(
-// 		["", "", "", "Past 2 Weeks"],
-// 		""
-// 	);
-// 	expect(prods).toBeDefined();
-// 	expect(prods.length).toBe(3);
-// });
-
-// test("Fetching products by date Month", async () => {
-// 	const prods = await dbServices.getProducts(["", "", "", "Past Month"], "");
-// 	expect(prods).toBeDefined();
-// 	expect(prods.length).toBe(4);
-// });
-
-// test("Fetching products by date Year", async () => {
-// 	const prods = await dbServices.getProducts(["", "", "", "Past Year"], "");
-// 	expect(prods).toBeDefined();
-// 	expect(prods.length).toBe(5);
-// });
-
 test("split test", async () => {
 	let str = "dylan Simons";
 	let split = str.split(" ");
@@ -483,24 +317,84 @@ test("split test", async () => {
 	expect(1).toBe(1);
 });
 
-test("sort test", async () => {
+test("Sort test", async () => {
 	let list = [];
 	list.push({ word: "one", rank: 1 });
 	list.push({ word: "five", rank: 5 });
 	list.push({ word: "four", rank: 4 });
 	list.push({ word: "two", rank: 2 });
 	let x = list.sort((a, b) => (a.rank < b.rank ? 1 : -1));
-	// console.log(x);
 	expect(1).toBe(1);
 });
 
-test("dates test", async () => {
+test("Dates test", async () => {
 	let now = Date.now();
 	let past = "2021-11-29";
 	let present = "2021-11-30";
 	let future = "2022-12-30";
-
 	let msyear = 1000 * 3600 * 24 * 365.25;
 
-	// console.log(now / msyear);
+});
+
+test("Fetching all users", async () => {
+	const users = await dbServices.getUser("");
+	expect(users).toBeDefined();
+	expect(users.length).toBeGreaterThan(0);
+});
+
+test("Fetching users by id", async () => {
+	const _id = "507f191e810c19729de860ea";
+	const users = await dbServices.getUser(_id);
+	expect(users).toBeDefined();
+	expect(users.length).toBeGreaterThan(0);
+	users.forEach((user) => expect(users[0]._id.toString()).toBe(_id));
+});
+
+test("Fetching users by email", async () => {
+	const userEmail = "runk@hotmail.com";
+	const users = await dbServices.findUserByEmail(userEmail);
+	expect(users).toBeDefined();
+	expect(users.length).toBeGreaterThan(0);
+	users.forEach((user) => expect(user.email).toBe(userEmail));
+});
+
+test("Get DB Connection", async () => {
+
+});
+
+test("Add product", async () => {
+	let productToAdd = {
+		title: "poop",
+		datePosted: "11/30/20",
+		category: "Sports",
+		description: "I hate my life and want to eat poop",
+		location: "Bakersfield",
+		contactInfo: "Hugh Janus",
+		image: "h",
+	};
+	const addedProduct = await dbServices.addProduct(productToAdd);
+	expect(addedProduct).toBeDefined();
+	expect(addedProduct.title).toBe(productToAdd.title);
+	expect(addedProduct.description).toBe(productToAdd.description);
+});
+
+test("Find product by ID", async () => {
+	const id = "507f191e710c19729de860ea";
+	const product = await dbServices.findProductById(id)
+	expect(product).toBeDefined()
+	expect(product.length).toBeGreaterThan(0)
+	product.forEach((product) => expect(product._id.toString()).toBe(id));
+});
+
+test("Add user", async () => {
+	let userToAdd = {
+		name: "Ryan Greg",
+		_id: mongoose.Types.ObjectId("507f191e810c19729de860ef"),
+		email: "rgreg@gmail.com",
+		password: "slbgf23r23l",
+	};
+	const addedUser = await dbServices.addUser(userToAdd);
+	expect(addedUser).toBeDefined();
+	expect(addedUser.name).toBe(userToAdd.name);
+	expect(addedUser.email).toBe(userToAdd.email);
 });

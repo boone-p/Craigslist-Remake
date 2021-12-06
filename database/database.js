@@ -143,26 +143,15 @@ function dynamicSimilarity(s1, s2) {
 
 async function addProduct(product) {
 	const productModel = getConnection().model("Product", productSchema);
-	try {
-		const prodToAdd = new productModel(product);
-		const savedProd = await prodToAdd.save();
-		return savedProd;
-	} catch (error) {
-		console.log(error);
-		return false;
-	}
+	const prodToAdd = new productModel(product);
+	const savedProd = await prodToAdd.save();
+	return savedProd;
 }
 
 async function findProductById(id) {
 	const productModel = getConnection().model("Product", productSchema);
-	try {
-		let _id = mongoose.Types.ObjectId(id)
-		return await productModel.findById(id);//find({_id: _id}).lean();
-	} catch (error) {
-		console.log("NOT FOUND IN FINDBYID")
-		console.log(error);
-		return false;
-	}
+	let _id = mongoose.Types.ObjectId(id)
+	return await productModel.find({_id: _id}).lean();
 }
 
 /**
@@ -173,7 +162,7 @@ async function getUser(id) {
 	const userModel = getConnection().model("User", userSchema);
 	if (!(id === "")) {
 		// find user by id
-		return await userModel.findById(id); // might need to convert from string to ObjectID type
+		return await userModel.find({_id: id}); // might need to convert from string to ObjectID type
 	} else {
 		return await userModel.find();
 	}
@@ -182,42 +171,22 @@ async function getUser(id) {
 async function addUser(user) {
 	console.log("adding user")
 	const userModel = getConnection("User").model("User", userSchema);
-	try {
-		const userToAdd = new userModel(user);
-		const savedUser = await userToAdd.save();
-		return savedUser;
-	} catch (error) {
-		console.log(error);
-		return false;
-	}
+	const userToAdd = new userModel(user);
+	const savedUser = await userToAdd.save();
+	return savedUser;
 }
 
 async function findUserByEmail(givenEmail) {
 	const userModel = getConnection().model("User", userSchema);
-	try {
-		return await userModel.find({email:givenEmail}).lean();
-	} catch (error) {
-		console.log(error);
-		return false;
-	}
+	return await userModel.find({email:givenEmail}).lean();
 }
 
-async function deleteUser(id) {
-	const userModel = getConnection().model("User", userSchema);
-	try {
-		return await userModel.deleteOne({_id: id});
-		//return await findByNameAndIdAndDelete(id); //write search algorithm
-	} catch (error) {
-		console.log(error);
-		return false;
-	}
-}
-
+exports.getConnection = getConnection;
+exports.setConnection = setConnection;
 exports.getProducts = getProducts;
 exports.addProduct = addProduct;
 exports.getUser = getUser;
 exports.addUser = addUser;
-exports.deleteUser = deleteUser;
 exports.findUserByEmail = findUserByEmail;
 exports.findProductById = findProductById;
 exports.setConnection = setConnection;

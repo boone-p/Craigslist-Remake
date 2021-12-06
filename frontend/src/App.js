@@ -5,7 +5,6 @@ import Navbar from './Navbar';
 import About from './About';
 import Register from './Register';
 import Login from './Login';
-import Sidebar from './Sidebar'
 import axios from 'axios';
 import Product from './Product';
 
@@ -160,7 +159,6 @@ function App() {
 
 					<Route path="/">
 						<Cards productData={products}/>
-						<Sidebar />
 					</Route>
 					
 

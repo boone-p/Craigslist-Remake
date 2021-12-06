@@ -59,11 +59,9 @@ function Form(props) {
 
     async function handleChangePic(event) {
         const file = event.target.files[0];
-        console.log("handleChangePic")
         if (file) {
             let result = await readFileAsBinary(file);
             setProductImage(() => {
-                console.log(result);
                 return result;
             });
         }
