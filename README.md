@@ -58,7 +58,7 @@ Database Dependencies:
 
 PROJECT BLURB:
 
-The Free Stuff App drew inspiration from poplular eCommerce websites such as CraigsList or Amazon.  We wanted to implement features that mimicked these websites to get a better understanding of real world applications.  Some standout features are our user authentication system, our search engine system, and our image submission form.  These were the three core implementations that took up the most time during the development process and in our opinion, replicates what a professional web application would do.
+The Free Stuff App drew inspiration from poplular eCommerce websites such as CraigsList or Amazon.  We wanted to implement features that mimicked these websites to get a better understanding of real world applications.  Some standout features are our user authentication system, our search engine system, and our image submission form.  These were the three core implementations that took up the most time during the development process and replicates what a professional web application would do.
 
 
 CODE COVERAGE REPORT:
