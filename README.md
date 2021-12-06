@@ -41,7 +41,7 @@ Database Dependencies: {
      "bcryptjs": "^2.4.3",  
      "dotenv": "^10.0.0",  
      "mongoose": "^6.0.10",  
-     "mongodb-memory-server": "^8.0.4"
+     "mongodb-memory-server": "^8.0.4"  
      }  
 
 PROJECT BLURB:
