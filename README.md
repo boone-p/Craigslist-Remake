@@ -11,6 +11,7 @@ Link to our Component Diagram: https://drive.google.com/file/d/1x_YaEbIvXLNYa_1b
 Link to our Class Diagram: https://drive.google.com/drive/u/1/folders/0AFu4tuZPxMqsUk9PVA  
 
 DEVELOPMENT ENVIRONMENT SETUP:
+
 Package Manager: https://www.npmjs.com/
 
 Frontend Dependencies:  
