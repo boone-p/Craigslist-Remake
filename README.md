@@ -15,45 +15,45 @@ DEVELOPMENT ENVIRONMENT SETUP:
 Package Manager: https://www.npmjs.com/
 
 Frontend Dependencies:  
-    "dependencies": {
-      "axios": "^0.24.0",
-      "bootstrap": "^5.1.3",
-      "cra-template": "1.1.2",
-      "react": "^17.0.2",
-      "react-bootstrap": "^2.0.2",
-      "react-cookie": "^4.1.1",
-      "react-cookies": "^0.1.1",
-      "react-dom": "^17.0.2",
-      "react-router-dom": "^5.3.0",
-      "react-scripts": "^4.0.3"
-    }
+    "dependencies": {  
+      "axios": "^0.24.0",  
+      "bootstrap": "^5.1.3",  
+      "cra-template": "1.1.2",  
+      "react": "^17.0.2",  
+      "react-bootstrap": "^2.0.2",  
+      "react-cookie": "^4.1.1",  
+      "react-cookies": "^0.1.1",  
+      "react-dom": "^17.0.2",  
+      "react-router-dom": "^5.3.0",  
+      "react-scripts": "^4.0.3"  
+    }  
     
   
 Backend Dependencies:  
-    "dependencies": {
-      "axios": "^0.21.4",
-      "bcryptjs": "^2.4.3",
-      "cors": "^2.8.5",
-      "dotenv": "^10.0.0",
-      "express": "^4.17.1",
-      "jsonwebtoken": "^8.5.1",
-      "mongoose": "^6.0.10",
-      "multer": "^1.4.3"
-    },
-    "devDependencies": {
-      "nodemon": "^2.0.13"
-    }
+    "dependencies": {  
+      "axios": "^0.21.4",  
+      "bcryptjs": "^2.4.3",  
+      "cors": "^2.8.5",  
+      "dotenv": "^10.0.0",  
+      "express": "^4.17.1",  
+      "jsonwebtoken": "^8.5.1",  
+      "mongoose": "^6.0.10",  
+      "multer": "^1.4.3"  
+    },  
+    "devDependencies": {  
+      "nodemon": "^2.0.13"  
+    }  
     
 Database Dependencies:  
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "crypto": "^1.0.1",
-    "dotenv": "^10.0.0",
-    "gridfs-stream": "^1.1.1",
-    "mongoose": "^6.0.10",
-    "multer": "^1.4.3",
-    "multer-gridfs-storage": "^5.0.2"
-  }
+  "dependencies": {  
+    "bcryptjs": "^2.4.3",  
+    "crypto": "^1.0.1",  
+    "dotenv": "^10.0.0",  
+    "gridfs-stream": "^1.1.1",  
+    "mongoose": "^6.0.10",  
+    "multer": "^1.4.3",  
+    "multer-gridfs-storage": "^5.0.2"  
+  }  
 
 
 PROJECT BLURB:
