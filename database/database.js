@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const productSchema = require("./productSchema");
 const userSchema = require("./userSchema");
 const dotenv = require("dotenv");
-dotenv.config();
+dotenv.config({path: "../../../Project/.env"});
 
 let conn;
 
@@ -46,102 +46,24 @@ function getConnection() {
 //  */
 async function getProducts(sidebarCriteria, searchCriteria) {
 	// change to accept search and sidebar criteria, filter by sidebar and then search bar
-	let products = await getProductsSidebar(sidebarCriteria);
+	// let products = await getProductsSidebar(sidebarCriteria);
+	const productModel = getConnection().model("Product", productSchema);
+	let products = await productModel.find();
 	return filterProductsSearch(products, searchCriteria);
 }
 
-async function getProductsLanding(criteria) {
-	const productModel = getConnection("Product").model("Product", productSchema);
-	let result;
-	if (criteria === undefined) result = await productModel.find();
-	else {}
-	return result;
-}
-
-// criteriaList = [“_id”, "condition", "category", "date posted"]
-async function getProductsSidebar(criteriaList) {
-	const productModel = getConnection().model("Product", productSchema);
-	let filter = 0;
-	// if _id not in search criteria, filter by other criteria
-	if (!(criteriaList[0] === "")) {
-		// return product with that _id
-		return await productModel.findById(criteriaList[0]);
-	}
-	let find = "";
-	let q = {};
-	if (!(criteriaList[1] === "")) {
-		// add condition to query
-		find = find + " condition: " + criteriaList[1] + ",";
-		q = Object.assign(q, { condition: criteriaList[1] });
-		filter = 1;
-	}
-	if (!(criteriaList[2] === "")) {
-		// add category to query
-		find = find + " category: " + criteriaList[2];
-		q = Object.assign(q, { category: criteriaList[2] });
-		filter = 1;
-	}
-
-	let products;
-	if (filter === 1) products = await productModel.find(q);
-	else products = await productModel.find();
-
-	if (!(criteriaList[3] === "")) {
-		// filter by date posted
-		products = filterByDate(products, criteriaList[3]);
-	}
-	return products;
-}
-
-function filterByDate(products, constraint) {
-	let productsFiltered = [];
-	products.forEach((prod) => {
-		if (
-			checkProductDate(Date.now() - prod.datePosted.getTime(), constraint)
-		) {
-			productsFiltered.push(prod);
-		}
-	});
-	return productsFiltered;
-}
-
-function checkProductDate(diff, constraint) {
-	switch (constraint) {
-		case "Past 24 Hours":
-			if (diff < 1000 * 3600 * 24) return true;
-			else return false;
-			break;
-		case "Past Week":
-			if (diff < 1000 * 3600 * 24 * 7) return true;
-			else return false;
-			break;
-		case "Past 2 Weeks":
-			if (diff < 1000 * 3600 * 24 * 7 * 2) return true;
-			else return false;
-			break;
-		case "Past Month":
-			if (diff < 1000 * 3600 * 24 * 30) return true;
-			else return false;
-			break;
-		case "Past Year":
-			if (diff < 1000 * 3600 * 24 * 365) return true;
-			else return false;
-			break;
-		default:
-			break;
-	}
-}
-
+// filters products based on similarity to searchString
 function filterProductsSearch(products, searchString) {
 	// verify that there search criteria exists
 	if (searchString === "") return products;
-	let threshold = 0.65;
 	// break search into individual words
+	let threshold = 0.65;
 	let searchWords = searchString.split(" ");
 	// list of {product, score} tuples
 	prodScores = [];
 	products.forEach((prod) => {
 		// complie product keywords from title, description, seller, location, etc.
+		// let sellerName = getSellerName(prod.seller); // get seller name from product's user _id
 		let prodStrs = [prod.title, prod.description, prod.location];
 		// list to accumulate points for each product search attribute
 		let rs = [0, 0, 0];
@@ -220,8 +142,6 @@ function dynamicSimilarity(s1, s2) {
 
 
 async function addProduct(product) {
-	console.log("product in addProduct")
-	console.log(product)
 	const productModel = getConnection().model("Product", productSchema);
 	try {
 		const prodToAdd = new productModel(product);
@@ -237,19 +157,9 @@ async function findProductById(id) {
 	const productModel = getConnection().model("Product", productSchema);
 	try {
 		let _id = mongoose.Types.ObjectId(id)
-		return await productModel.find({_id: _id}).lean();
+		return await productModel.findById(id);//find({_id: _id}).lean();
 	} catch (error) {
 		console.log("NOT FOUND IN FINDBYID")
-		console.log(error);
-		return false;
-	}
-}
-
-async function deleteProduct(id) {
-	const productModel = getConnection().model("Product", productSchema);
-	try {
-		return await productModel.findByIdAndDelete(id); //write search algorithm
-	} catch (error) {
 		console.log(error);
 		return false;
 	}
@@ -270,6 +180,7 @@ async function getUser(id) {
 }
 
 async function addUser(user) {
+	console.log("adding user")
 	const userModel = getConnection("User").model("User", userSchema);
 	try {
 		const userToAdd = new userModel(user);
@@ -302,12 +213,14 @@ async function deleteUser(id) {
 	}
 }
 
-exports.getProductsLanding = getProductsLanding;
 exports.getProducts = getProducts;
 exports.addProduct = addProduct;
-exports.deleteProduct = deleteProduct;
 exports.getUser = getUser;
 exports.addUser = addUser;
 exports.deleteUser = deleteUser;
 exports.findUserByEmail = findUserByEmail;
 exports.findProductById = findProductById;
+exports.setConnection = setConnection;
+exports.dynamicSimilarity = dynamicSimilarity;
+exports.getConnection = getConnection;
+exports.filterProductsSearch = filterProductsSearch;
