@@ -9,47 +9,40 @@ const grid = {
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    paddingLeft: '145px'
+    allignItems:'center',
+    justifyContent:'center'
 }
 
 const box = {
-    maxWidth: '19rem',
-    maxHeight: '23rem',
+    width: '19rem',
+    maxHeight: '25rem',
     margin: '80px',
-    boxShadow: '2px 2px 2px 2px #cccccc',
+    boxShadow: '1px 1px 1px 1px #cccccc',
 }
 
 const image = {
     marginTop:'5px',
-    marginLeft:'6px',
-    borderRadius: 55,
-    width: '17vw',
-    height: '29vh'
+    marginLeft:'10px',
+    height: '30vh',
+    width: '95%'
 }
 
 function RenderCards(props) {
     const cards = props.productData.map((product, index) => {
         return (
-           
-         
-
+        
                 <Card style = {box} key={index}>
 
                         <Link to={"/product/"+product._id}>
                             <Card.Img style={image} variant="top" alt="holder.js/250x250" src={product.image} /> 
                         </Link>
 
-                    
-
                     <Card.Body>
                         <Card.Header>{product.title}</Card.Header>
-                        <Card.Text>{product.description} </Card.Text>
+             
                     </Card.Body>
 
                 </Card>
-          
-
-    
         );
     });
 
