@@ -6,7 +6,12 @@ function logout() {
     window.location.reload(false);
 }
 
-function MyNavbar() {
+function MyNavbar(props) {
+    
+    function searchInput() {
+        props.handleSubmit(document.getElementById("mySearch").value);
+    }
+    
     return (
         <Navbar bg="light" expand="lg">
         <Container>
@@ -24,9 +29,9 @@ function MyNavbar() {
                     </NavDropdown>
                 </Nav>
                 <form className="d-flex">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <input className="form-control me-2" type="search" id="mySearch" placeholder="Search" aria-label="Search">
                 </input>
-                <button className="btn btn-outline-success" type="submit">Search</button>
+                <button className="btn btn-outline-success" type="submit" onClick={() => searchInput()}>Search</button>
                 </form>
             </Navbar.Collapse>
         </Container>
