@@ -4,11 +4,6 @@ The Free Stuff App drew inspiration from poplular eCommerce websites such as Cra
 
 This project primarily follows the style and formatting rules outlined by the Prettier default settings: https://prettier.io/docs/en/options.html    
 
-Link to our UI Prototype: https://www.figma.com/file/HoJW3uMMTX8vUTr2DTaLBV/product-form-page?node-id=9%3A2 
-
-Link to our Component Diagram: https://drive.google.com/file/d/1x_YaEbIvXLNYa_1bVEftvxYsdVj8CNHf/view?usp=sharing 
-
-Link to our Class Diagram: https://drive.google.com/file/d/1UeNfmCKKfKcF0WCdpJQjHTg38GqxIauf/view?usp=sharing
 
 DEVELOPMENT ENVIRONMENT SETUP:
 
